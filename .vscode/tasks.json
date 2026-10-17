@@ -6,8 +6,9 @@
       "type": "shell",
       "command": "gcc",
       "args": [
-        "${file}",
-        "-o", "${fileDirname}/${fileBasenameNoExtension}.exe",
+        "${workspaceFolder}/main.c",
+        "${workspaceFolder}/player.c",
+        "-o", "${workspaceFolder}/Dogat.exe",
         "-I", "C:/raylib/include",
         "-L", "C:/raylib/lib",
         "-lraylib", "-lopengl32", "-lgdi32", "-lwinmm"
