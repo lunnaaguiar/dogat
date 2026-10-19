@@ -9,6 +9,7 @@ typedef struct {
     float velY; // controla a velocidade do personagem no eixo Y
     bool isGround;
     bool isActive; // alterna entre os personagens
+    bool isLeft; // controla a direção do personagem
 
     Texture2D sprite; // coloca o sprite do personagem
 } Player;

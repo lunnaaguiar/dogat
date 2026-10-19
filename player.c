@@ -13,16 +13,23 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active)
     p->velY = 0.0f; // controla a velocidade do personagem no eixo Y
     p->isGround = false;
     p->isActive = active; // alterna entre os personagens
+    p->isLeft = false; // controla a direção do personagem
 }
 
 void PlayerUpdate(Player *p, float dt)
 {   
     // movimentacao do personagem
     if(p->isActive){
-        if (IsKeyDown(KEY_RIGHT)) p->pos.x += p->speed * dt;
-        if (IsKeyDown(KEY_LEFT)) p->pos.x -= p->speed * dt;
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)){
+            p->pos.x += p->speed * dt;
+            p->isLeft = false;
+        }
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+            p->pos.x -= p->speed * dt;
+            p->isLeft = true;
+        }
 
-        if(IsKeyPressed(KEY_UP) && p->isGround) {
+        if((IsKeyPressed(KEY_UP) || IsKeyDown(KEY_W)) && p->isGround) {
             p->velY = -p->jumpForce;
             p->isGround = false;
         }
@@ -33,8 +40,8 @@ void PlayerUpdate(Player *p, float dt)
     p->pos.y += p->velY * dt;
 
     //verifica se o personagem esta no chao
-    if (p->pos.y + p->size.y >= GROUND_Y) {
-        p->pos.y = GROUND_Y - p->size.y;
+    if (p->pos.y + (p->size.y / 2.0f) >= GROUND_Y) {
+        p->pos.y = GROUND_Y - (p->size.y/ 2.0f);
         p->velY = 0;
         p->isGround = true;
     }
@@ -42,5 +49,16 @@ void PlayerUpdate(Player *p, float dt)
 
 void PlayerDraw(const Player *p)
 {
-    DrawTextureV(p->sprite, p->pos, WHITE);
+    Rectangle dest = { p->pos.x, p->pos.y, p->sprite.width, p->sprite.height}; //Define o tamanho na tela
+
+    Vector2 origin = { dest.width / 2, dest.height / 2}; // define o meio do sprite como ponto de origem / pivot -> Muito útil é bom lembrar disso
+
+    Rectangle corte; // o sprite em um spritesheet
+
+    if (p->isLeft) {
+        corte = (Rectangle){ 0, 0, -p->sprite.width, p->sprite.height }; // negativa / esquerda
+    } else {
+        corte = (Rectangle){ 0, 0, p->sprite.width, p->sprite.height }; // postiva / direita
+    }
+    DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);
 }
