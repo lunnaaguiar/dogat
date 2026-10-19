@@ -3,11 +3,11 @@
 #define GRAVITY   600.0f // gravidade
 #define GROUND_Y  1000.0f // chao
 
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
     p->pos = start; // onde ele spawna
-    p->size = (Vector2){ p->sprite.width, p->sprite.height}; // tamanho do personagem
+    p->size = (Vector2){ 2.5f * p->sprite.width, 2.5f * p->sprite.height}; // tamanho do personagem
     p->speed = 220.0f;
     p->jumpForce = 500.0f;
     p->velY = 0.0f; // controla a velocidade do personagem no eixo Y
@@ -49,7 +49,7 @@ void PlayerUpdate(Player *p, float dt)
 
 void PlayerDraw(const Player *p)
 {
-    Rectangle dest = { p->pos.x, p->pos.y, p->sprite.width, p->sprite.height}; //Define o tamanho na tela
+    Rectangle dest = { p->pos.x, p->pos.y, p->size.x, p->size.y}; //Define o tamanho na tela
 
     Vector2 origin = { dest.width / 2, dest.height / 2}; // define o meio do sprite como ponto de origem / pivot -> Muito útil é bom lembrar disso
 
@@ -60,5 +60,7 @@ void PlayerDraw(const Player *p)
     } else {
         corte = (Rectangle){ 0, 0, p->sprite.width, p->sprite.height }; // postiva / direita
     }
+
+    //Desenha o sprite na tela
     DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);
 }
