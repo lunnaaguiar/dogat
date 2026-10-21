@@ -3,13 +3,16 @@
 #define GRAVITY   600.0f // gravidade
 #define GROUND_Y  1000.0f // chao
 
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, float moveSpeed, float jumpForce, bool active) 
+//adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+// lembrar de mudar no player.h também
+
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
     p->pos = start; // onde ele spawna
     p->size = (Vector2){ 2.5f * p->sprite.width, 2.5f * p->sprite.height}; // tamanho do personagem
-    p->speed = 220.0f;
-    p->jumpForce = 500.0f;
+    p->speed = moveSpeed;
+    p->jumpForce = jumpForce;
     p->velY = 0.0f; // controla a velocidade do personagem no eixo Y
     p->isGround = false;
     p->isActive = active; // alterna entre os personagens

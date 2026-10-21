@@ -6,8 +6,8 @@ int main(void) {
     SetTargetFPS(60);
 
     Player dog, cat;
-    PlayerInit(&dog, "assets/metagross.png", (Vector2){ 100, 100 }, true);
-    PlayerInit(&cat, "assets/absol.png", (Vector2){ 200, 100 }, false);
+    PlayerInit(&dog, "assets/metagross.png", (Vector2){ 100, 100 }, 120.0f, 300.0f, true);
+    PlayerInit(&cat, "assets/absol.png", (Vector2){ 200, 100 }, 220.0f, 500.0f, false);
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();

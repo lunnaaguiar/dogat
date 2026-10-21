@@ -15,7 +15,8 @@ typedef struct {
 } Player;
 
 // personagem, onde ele spawna, tamanho do sprite e se ele começa ativo ou não
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active);
+//adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, float moveSpeed, float jumpForce, bool active);
 
 //Declaração das funções para usar no player.c
 void PlayerUpdate(Player *p, float dt);
