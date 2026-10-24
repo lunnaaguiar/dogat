@@ -2,12 +2,17 @@
 #include "player.h"
 
 int main(void) {
-    InitWindow(1920, 1080, "Dogat");
+    InitWindow(1280, 720, "Dogat");
+    SetWindowPosition(100, 100);
     SetTargetFPS(60);
 
     Player dog, cat;
     PlayerInit(&dog, "assets/metagross.png", (Vector2){ 100, 100 }, true);
-    PlayerInit(&cat, "assets/absol.png", (Vector2){ 200, 100 }, false);
+    dog.facesLeft = false;
+    dog.jumpForce = 400.0f;
+    PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false);
+    cat.jumpForce = 600.0f; // altura que o gato pula
+    cat.facesLeft = true; // pq desenhei do lado contrário
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -20,8 +25,8 @@ int main(void) {
         PlayerUpdate(&cat, dt);
 
         BeginDrawing();
-        DrawLine(0, 1000, 1920, 1000, WHITE);
         ClearBackground(BLACK);
+        DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&dog);
         PlayerDraw(&cat);
         EndDrawing();
