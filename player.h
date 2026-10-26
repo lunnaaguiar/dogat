@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "raylib.h"
 #include <stdbool.h>
 
@@ -19,5 +22,7 @@ typedef struct {
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, float moveSpeed, float jumpForce, bool active);
 
 //Declaração das funções para usar no player.c
-void PlayerUpdate(Player *p, float dt);
+void PlayerUpdate(Player *p, float dt, float groundY);
 void PlayerDraw(const Player *p);
+
+#endif

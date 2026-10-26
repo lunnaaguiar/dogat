@@ -1,7 +1,6 @@
 #include "player.h"
 
 #define GRAVITY   600.0f // gravidade
-#define GROUND_Y  1000.0f // chao
 
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, float moveSpeed, float jumpForce, bool active) 
 //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
@@ -19,7 +18,7 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, float moveSpee
     p->isLeft = false; // controla a direção do personagem
 }
 
-void PlayerUpdate(Player *p, float dt)
+void PlayerUpdate(Player *p, float dt, float groundY)
 {   
     // movimentacao do personagem
     if(p->isActive){
@@ -43,8 +42,8 @@ void PlayerUpdate(Player *p, float dt)
     p->pos.y += p->velY * dt;
 
     //verifica se o personagem esta no chao
-    if (p->pos.y + (p->size.y / 2.0f) >= GROUND_Y) {
-        p->pos.y = GROUND_Y - (p->size.y/ 2.0f);
+    if (p->pos.y + (p->size.y / 2.0f) >= groundY) {
+        p->pos.y = groundY - (p->size.y / 2.0f);
         p->velY = 0;
         p->isGround = true;
     }
