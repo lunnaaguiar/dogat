@@ -10,6 +10,11 @@ typedef struct {
     bool isGround;
     bool isActive; // alterna entre os personagens
     bool isLeft; // controla a direção do personagem
+    
+    // // //
+    Vector2 hitboxOffset; // adiciona   
+    Rectangle hitbox;     // hitbox
+    // // //
 
     Texture2D sprite; // coloca o sprite do personagem
 } Player;
@@ -18,5 +23,5 @@ typedef struct {
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active);
 
 //Declaração das funções para usar no player.c
-void PlayerUpdate(Player *p, float dt);
+void PlayerUpdate(Player *p, float dt, Rectangle parede);
 void PlayerDraw(const Player *p);
