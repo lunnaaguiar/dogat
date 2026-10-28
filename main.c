@@ -7,7 +7,7 @@ int main(void) {
     SetTargetFPS(60);
 
     Player dog, cat;
-    PlayerInit(&dog, "assets/metagross.png", (Vector2){ 100, 100 }, true);
+    PlayerInit(&dog, "assets/cachorrinho2-Sheet.png", (Vector2){ 100, 100 }, true);
     dog.facesLeft = false;
     dog.jumpForce = 400.0f;
     PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false);
