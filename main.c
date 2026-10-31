@@ -7,9 +7,12 @@ int main(void) {
     SetTargetFPS(60);
 
     Player dog, cat;
+    // cachorro
     PlayerInit(&dog, "assets/cachorrinho2-Sheet.png", (Vector2){ 100, 100 }, true);
     dog.facesLeft = false;
     dog.jumpForce = 400.0f;
+    dog.size = (Vector2){ 4.0f * dog.frameWidth, 4.0f * dog.frameHeight };
+    // gato
     PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false);
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
