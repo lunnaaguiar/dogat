@@ -58,6 +58,41 @@ static void ResolverColisaoY(Player *p, Rectangle bloco){
     AtualizarHitbox(p);
 }
 
+void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
+    // dog = forte
+    // cat = fraco
+
+    Vector2 difDog;
+    difDog.x = dog->pos.x - dog->posAntes.x;
+    difDog.y = dog->pos.y - dog->posAntes.y;
+    
+    float topoForte = dog->hitbox.y; // cabeça do cachorro
+    float pezinhoCatAntes = cat->posAntes.y + cat->hitboxOffset.y + cat->hitbox.height;
+
+    // acabou de cair no dog
+    bool pousou = CheckCollisionRecs(cat->hitbox, dog->hitbox)
+               && cat->velY > 0
+               && pezinhoCatAntes <= topoForte - difDog.y + 1.0f;
+
+    // se ainda estão juntos considerando a largura
+    bool sobreDog = cat->hitbox.x < dog->hitbox.x + dog->hitbox.width
+                 && cat->hitbox.x + cat->hitbox.width > dog->hitbox.x;
+
+    // salva o estado que impede o gato de cair do cachorro quando atualiza os frames                 
+    cat->emCimaDog = pousou || (cat->emCimaDog && cat->velY > 0 && sobreDog);
+
+    if (!cat->emCimaDog) return;
+
+    // posicionamento do gato
+    cat->pos.y = topoForte - cat->hitbox.height - cat->hitboxOffset.y;
+    cat->pos.x += difDog.x;
+    cat->velY = 0;
+    cat->isGround = true;
+
+    AtualizarHitbox(cat);
+
+} 
+
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
@@ -73,7 +108,7 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) /
     // tamanho da hitbox
     p->hitbox.width = p->size.x * 0.7f;
     p->hitbox.height = p->size.y * 0.9f; // deixar positivo
-    
+    p->emCimaDog = false;
     //
     p->hitboxOffset.x = -p->hitbox.width / 2.0f;
     p->hitboxOffset.y = -p->hitbox.height / 2.0f;
@@ -103,17 +138,16 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
         }
     }
 
+    p->posAntes.x = p->pos.x; // salva a posição x antes de atualizar
     p->pos.x += dx;
-
+    
     // atualizar hitbox x
     AtualizarHitbox(p); 
     ResolverColisaoX(p, dx, parede);
 
-    // parte do x ^^^^^
-
-    // parte do y
-    //  |
-    //  V
+    
+    // também salva a posição y anterior
+    p->posAntes.y = p->pos.y;
     p->isGround = false;
 
     //gravidade

@@ -19,20 +19,20 @@ int main(void) {
 
         Rectangle parede = { 400, GetScreenHeight()-100, 100, 100 };
 
-        PlayerUpdate(&dog, dt, parede); // adicionei +1 parametro
+        PlayerUpdate(&dog, dt, parede); 
         PlayerUpdate(&cat, dt, parede);
 
+        // regras do multiplayer (vem depois do playerUpdate)
+        carregarPlayerMulti(&dog, &cat);
+        
         BeginDrawing();
-        // DrawLine(0, 1000, 1920, 1000, WHITE); // marcar o chão 
+        
         ClearBackground(BLACK);
 
         PlayerDraw(&dog);
         PlayerDraw(&cat);
         
         DrawRectangleRec(parede, WHITE);
-        if (CheckCollisionRecs(dog.hitbox, parede)) {
-            DrawText(TextFormat("colidiu"), 200, 80, 20, RED);
-        }
         
         EndDrawing();
 

@@ -11,10 +11,10 @@ typedef struct {
     bool isActive; // alterna entre os personagens
     bool isLeft; // controla a direção do personagem
     
-    // // //
-    Vector2 hitboxOffset; // adiciona   
-    Rectangle hitbox;     // hitbox
-    // // //
+    Vector2 hitboxOffset;   // distancia do centro para a borda da hitbox   
+    Rectangle hitbox;       // delimita hitbox 
+    Vector2 posAntes;       // salvar a posição antes da atualização
+    bool emCimaDog;         // avisa que o gatinho está em cima  
 
     Texture2D sprite; // coloca o sprite do personagem
 } Player;
@@ -25,3 +25,4 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active);
 //Declaração das funções para usar no player.c
 void PlayerUpdate(Player *p, float dt, Rectangle parede);
 void PlayerDraw(const Player *p);
+void carregarPlayerMulti(Player * dog, Player * cat);
