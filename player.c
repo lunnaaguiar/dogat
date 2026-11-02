@@ -1,7 +1,7 @@
 #include "player.h"
 
 #define GRAVITY   600.0f // gravidade
-#define GROUND_Y  1000.0f // chao
+#define GROUND_Y  600.0f // chao
 
 // fazer a hitbox andar junto com o personagem
 static void AtualizarHitbox(Player *p){
@@ -96,8 +96,20 @@ void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
+    SetTextureFilter(p->sprite, TEXTURE_FILTER_POINT); // pixel art nítida
+
+    // animação
+    p->totalFrames = 2; // pois tem 2 frames no spritesheet
+    p->frameAtual = 0; // primeiro frame
+    p->frameTimer = 0.0f; // contagem do tempo do frame
+    p->frameDuration = 0.5f; // duração de cada frame
+    p->frameWidth = p->sprite.width / p->totalFrames; // divide a imagem inteira pelo total de frames (2)
+    p->frameHeight = p->sprite.height; // a altura 32x
+    p->isMoving = false;
+
+    // personagem
     p->pos = start; // onde ele spawna
-    p->size = (Vector2){ 2.5f * p->sprite.width, 2.5f * p->sprite.height}; // tamanho do personagem
+    p->size = (Vector2){ 2.5f * p->frameWidth, 2.5f * p->frameHeight }; // tamanho do personagem
     p->speed = 220.0f;
     p->jumpForce = 500.0f;
     p->velY = 0.0f; // controla a velocidade do personagem no eixo Y
@@ -115,21 +127,25 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) /
 
     // atualizar hitbox
     AtualizarHitbox(p);
+    p->facesLeft = false;   // padrão: sprite olha pra direita
 }
 
 void PlayerUpdate(Player *p, float dt, Rectangle parede)
 {   
     float dx = 0;
+    p->isMoving = false;
 
     // movimentacao do personagem
     if(p->isActive){
         if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)){
             dx += p->speed * dt;
             p->isLeft = false;
+            p->isMoving = true;
         }
         if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
             dx -= p->speed * dt;
             p->isLeft = true;
+            p->isMoving = true;
         }
 
         if((IsKeyPressed(KEY_UP) || IsKeyDown(KEY_W)) && p->isGround) {
@@ -167,6 +183,18 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
     
     
 
+    // animação
+    if (p->isMoving){
+        p->frameTimer += dt; // calcula o tempo em segundos desde o último frame
+        if (p->frameTimer >= p->frameDuration){
+            p->frameTimer = 0.0f;
+            p->frameAtual = (p->frameAtual + 1) % p->totalFrames;
+        }
+    } else {
+            p->frameAtual = 0; // se estiver parado, volta pro frame inicial
+            p->frameTimer = 0.0f; 
+        }
+
 }
 
 void PlayerDraw(const Player *p)
@@ -175,13 +203,19 @@ void PlayerDraw(const Player *p)
 
     Vector2 origin = { dest.width / 2, dest.height / 2}; // define o meio do sprite como ponto de origem / pivot -> Muito útil é bom lembrar disso
 
-    Rectangle corte; // o sprite em um spritesheet
+    Rectangle corte = { // o sprite em um spritesheet
+        // { x, y, largura, altura }
+        (float)(p->frameAtual * p->frameWidth), // x
+        0, // y
+        (float)((p->isLeft != p->facesLeft) ? -p->frameWidth : p->frameWidth), // largura
+        (float)p->frameHeight // altura
+    }; 
 
-    if (p->isLeft) {
-        corte = (Rectangle){ 0, 0, -p->sprite.width, p->sprite.height }; // negativa / esquerda
-    } else {
-        corte = (Rectangle){ 0, 0, p->sprite.width, p->sprite.height }; // postiva / direita
-    }
+    //if (p->isLeft) {
+    //    corte = (Rectangle){ 0, 0, -p->sprite.width, p->sprite.height }; // negativa / esquerda
+    //} else {
+    //    corte = (Rectangle){ 0, 0, p->sprite.width, p->sprite.height }; // postiva / direita
+    //}
 
     //Desenha o sprite na tela
     DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);

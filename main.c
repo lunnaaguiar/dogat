@@ -3,12 +3,20 @@
 // #include "mapa.c"
 
 int main(void) {
-    InitWindow(1000, 1000, "Dogat");
+    InitWindow(1280, 720, "Dogat");
+    SetWindowPosition(100, 100);
     SetTargetFPS(60);
 
     Player dog, cat;
-    PlayerInit(&dog, "assets/metagross.png", (Vector2){ 100, 100 }, true);
-    PlayerInit(&cat, "assets/absol.png", (Vector2){ 200, 100 }, false);
+    // cachorro
+    PlayerInit(&dog, "assets/cachorrinho2-Sheet.png", (Vector2){ 100, 100 }, true);
+    dog.facesLeft = false;
+    dog.jumpForce = 400.0f;
+    dog.size = (Vector2){ 4.0f * dog.frameWidth, 4.0f * dog.frameHeight };
+    // gato
+    PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false);
+    cat.jumpForce = 600.0f; // altura que o gato pula
+    cat.facesLeft = true; // pq desenhei do lado contrário
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -26,9 +34,8 @@ int main(void) {
         carregarPlayerMulti(&dog, &cat);
         
         BeginDrawing();
-        
         ClearBackground(BLACK);
-
+        DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&dog);
         PlayerDraw(&cat);
         
