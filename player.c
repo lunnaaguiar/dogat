@@ -4,10 +4,11 @@
 #define GROUND_Y  600.0f // chao
 
 // fazer a hitbox andar junto com o personagem
-static void AtualizarHitbox(Player *p){
 
-    p->hitbox.x = p->pos.x + p->hitboxOffset.x;
-    p->hitbox.y = p->pos.y + p->hitboxOffset.y;
+static void AtualizarHitbox(Player *p){ // multiplicadores
+
+    p->hitbox.x = p->pos.x + p->hitboxOffset.x * p->hitboxPos.x;
+    p->hitbox.y = p->pos.y + p->hitboxOffset.y * p->hitboxPos.y; 
 }
 
 static void ResolverColisaoX(Player *p, float dx, Rectangle obstaculo)
@@ -93,7 +94,7 @@ void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
 
 } 
 
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, Vector2 hitboxPos) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
     SetTextureFilter(p->sprite, TEXTURE_FILTER_POINT); // pixel art nítida
@@ -102,7 +103,7 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) /
     p->totalFrames = 2; // pois tem 2 frames no spritesheet
     p->frameAtual = 0; // primeiro frame
     p->frameTimer = 0.0f; // contagem do tempo do frame
-    p->frameDuration = 0.5f; // duração de cada frame
+    p->frameDuration = 0.3f; // duração de cada frame
     p->frameWidth = p->sprite.width / p->totalFrames; // divide a imagem inteira pelo total de frames (2)
     p->frameHeight = p->sprite.height; // a altura 32x
     p->isMoving = false;
@@ -124,6 +125,10 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active) /
     //
     p->hitboxOffset.x = -p->hitbox.width / 2.0f;
     p->hitboxOffset.y = -p->hitbox.height / 2.0f;
+    //
+    p->hitboxPos.x = hitboxPos.x;
+    p->hitboxPos.y = hitboxPos.y;
+
 
     // atualizar hitbox
     AtualizarHitbox(p);
@@ -221,5 +226,5 @@ void PlayerDraw(const Player *p)
     DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);
 
     // hitbox
-    DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
+    // DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
 }

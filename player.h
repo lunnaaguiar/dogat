@@ -13,6 +13,7 @@ typedef struct {
     
     Vector2 hitboxOffset;   // distancia do centro para a borda da hitbox   
     Rectangle hitbox;       // delimita hitbox 
+    Vector2 hitboxPos;       //
     Vector2 posAntes;       // salvar a posição antes da atualização
     bool emCimaDog;         // avisa que o gatinho está em cima  
     bool facesLeft;   // true se o desenho original olha pra esquerda
@@ -32,7 +33,7 @@ typedef struct {
 
 
 // personagem, onde ele spawna, tamanho do sprite e se ele começa ativo ou não
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active);
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, Vector2 difHitbox);
 
 //Declaração das funções para usar no player.c
 void PlayerUpdate(Player *p, float dt, Rectangle parede);

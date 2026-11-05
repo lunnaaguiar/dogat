@@ -9,12 +9,12 @@ int main(void) {
 
     Player dog, cat;
     // cachorro
-    PlayerInit(&dog, "assets/cachorrinho2-Sheet.png", (Vector2){ 100, 100 }, true);
+    PlayerInit(&dog, "assets/cachorrinho2-Sheet.png", (Vector2){ 100, 100 }, true, (Vector2) {0.8,0.2});
     dog.facesLeft = false;
     dog.jumpForce = 400.0f;
     dog.size = (Vector2){ 4.0f * dog.frameWidth, 4.0f * dog.frameHeight };
     // gato
-    PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false);
+    PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false, (Vector2) {1,1});
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
@@ -36,8 +36,8 @@ int main(void) {
         BeginDrawing();
         ClearBackground(BLACK);
         DrawLine(0, 600, 1280, 600, WHITE);
-        PlayerDraw(&dog);
         PlayerDraw(&cat);
+        PlayerDraw(&dog);
         
         DrawRectangleRec(parede, WHITE);
         
