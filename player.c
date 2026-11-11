@@ -1,4 +1,7 @@
 #include "player.h"
+#include "mapa.h"
+
+extern int mapa[MAP_H][MAP_W]; // importa o mapa
 
 #define GRAVITY   600.0f // gravidade
 #define GROUND_Y  600.0f // chao
@@ -164,7 +167,17 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
     
     // atualizar hitbox x
     AtualizarHitbox(p); 
-    ResolverColisaoX(p, dx, parede);
+    // ResolverColisaoX(p, dx, parede);
+
+    // colisão com os tiles do mapa x
+    for(int i=0; i<MAP_H; i++){
+        for(int j=0; j<MAP_W; j++){
+            if (mapa[i][j] == 1){
+                Rectangle tile = {j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE};
+                ResolverColisaoX(p, dx, tile);
+            }
+        }
+    }
 
     
     // também salva a posição y anterior
@@ -184,8 +197,16 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
     
     // atualizar hitbox y
     AtualizarHitbox(p); 
-    ResolverColisaoY(p, parede);
-    
+
+    // colisão com os tiles do mapa y
+     for(int i=0; i<MAP_H; i++){
+        for(int j=0; j<MAP_W; j++){
+            if (mapa[i][j] == 1){
+                Rectangle tile = {j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE};
+                ResolverColisaoY(p, tile);
+            }
+        }
+    }
     
 
     // animação

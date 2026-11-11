@@ -1,9 +1,9 @@
 #include "raylib.h"
 #include "player.h"
-// #include "mapa.c"
+#include "mapa.c"
 
 int main(void) {
-    InitWindow(1280, 720, "Dogat");
+    InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
 
@@ -31,9 +31,10 @@ int main(void) {
         PlayerUpdate(&cat, dt, parede);
 
         // regras do multiplayer (vem depois do playerUpdate)
-        carregarPlayerMulti(&dog, &cat);
+        carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
         
         BeginDrawing();
+        DrawMapa(); // repetição que desenha cada tile
         ClearBackground(BLACK);
         DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&cat);
