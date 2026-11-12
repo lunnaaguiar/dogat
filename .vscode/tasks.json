@@ -8,6 +8,8 @@
       "args": [
         "${workspaceFolder}/main.c",
         "${workspaceFolder}/player.c",
+        "${workspaceFolder}/interactable.c",
+        "${workspaceFolder}/mapa.c",
         "-o", "${workspaceFolder}/Dogat.exe",
         "-I", "C:/raylib/include",
         "-L", "C:/raylib/lib",

@@ -1,7 +1,17 @@
 #include "raylib.h"
 #include "player.h"
 #include "interactable.h"
+#include "stdio.h"
 #include "mapa.h"
+
+static void SalvarTempo(float min, float sec, float ms) {
+    FILE *arq = fopen("Score.txt", "a");
+    if (arq == NULL) {
+        return;
+    }
+    fprintf(arq, "%02d:%02d:%02d\n", (int)min, (int)sec, (int)ms);
+    fclose(arq);
+}
 
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
@@ -21,13 +31,32 @@ int main(void) {
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
+    float min = 0.0f, sec = 0.0f, ms = 0.0f;
+
     Caixa caixa = {{64,0, 64,64}};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
+
+        //Timer
+        ms += dt * 1000.0f;
+        
+        if(ms >= 1000.0f) {
+            ms = 0.0f;
+            sec += 1.0f;
+        }
+        if(sec >= 60.0f) {
+            sec = 0.0f;
+            min += 1.0f;
+        }
+
         if (IsKeyPressed(KEY_SPACE)) {
             dog.isActive = !dog.isActive;
             cat.isActive = !cat.isActive;
+        }
+
+        if (IsKeyPressed(KEY_M)){
+            SalvarTempo(min, sec, ms);
         }
 
         Rectangle parede = { 400, GetScreenHeight()-100, 100, 100 };
@@ -49,6 +78,8 @@ int main(void) {
         
         DrawRectangleRec(parede, WHITE);
         DrawRectangleRec(caixa.rect, RED);
+
+        DrawText(TextFormat("Time: %02d:%02d:%02d", (int)min, (int)sec, (int)ms), 10, 40, 20, WHITE);
         
         EndDrawing();
 
