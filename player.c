@@ -1,8 +1,6 @@
 #include "player.h"
 #include "mapa.h"
 
-extern int mapa[MAP_H][MAP_W]; // importa o mapa
-
 #define GRAVITY   600.0f // gravidade
 #define GROUND_Y  600.0f // chao
 
@@ -10,8 +8,8 @@ extern int mapa[MAP_H][MAP_W]; // importa o mapa
 
 static void AtualizarHitbox(Player *p){ // multiplicadores
 
-    p->hitbox.x = p->pos.x + p->hitboxOffset.x * p->hitboxPos.x;
-    p->hitbox.y = p->pos.y + p->hitboxOffset.y * p->hitboxPos.y; 
+    p->hitbox.x = p->pos.x + p->hitboxOffset.x;
+    p->hitbox.y = p->pos.y + p->hitboxOffset.y; 
 }
 
 static void ResolverColisaoX(Player *p, float dx, Rectangle obstaculo)
@@ -89,6 +87,8 @@ void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
 
     // posicionamento do gato
     cat->pos.y = topoForte - cat->hitbox.height - cat->hitboxOffset.y;
+    if(difDog.x < 0) cat->isLeft = true; // faz o gatinho olhar pra mesma direção que o cachorro
+    else if(difDog.x > 0) cat->isLeft = false;
     cat->pos.x += difDog.x;
     cat->velY = 0;
     cat->isGround = true;
@@ -97,7 +97,7 @@ void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
 
 } 
 
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, Vector2 hitboxPos) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
     SetTextureFilter(p->sprite, TEXTURE_FILTER_POINT); // pixel art nítida
@@ -113,7 +113,7 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, V
 
     // personagem
     p->pos = start; // onde ele spawna
-    p->size = (Vector2){ 2.5f * p->frameWidth, 2.5f * p->frameHeight }; // tamanho do personagem
+    p->size = (Vector2){ escala * p->frameWidth, escala * p->frameHeight }; // tamanho do personagem > adiciona escala diretamente no player init <
     p->speed = 220.0f;
     p->jumpForce = 500.0f;
     p->velY = 0.0f; // controla a velocidade do personagem no eixo Y
@@ -122,15 +122,12 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, V
     p->isLeft = false; // controla a direção do personagem
     
     // tamanho da hitbox
-    p->hitbox.width = p->size.x * 0.7f;
-    p->hitbox.height = p->size.y * 0.9f; // deixar positivo
+    p->hitbox.width  = p->size.x * hitboxTam.x; // porcentagem da dimensão da hitbox
+    p->hitbox.height = p->size.y * hitboxTam.y; 
     p->emCimaDog = false;
     //
-    p->hitboxOffset.x = -p->hitbox.width / 2.0f;
-    p->hitboxOffset.y = -p->hitbox.height / 2.0f;
-    //
-    p->hitboxPos.x = hitboxPos.x;
-    p->hitboxPos.y = hitboxPos.y;
+    p->hitboxOffset.x = -p->hitbox.width / 2.0f;                  // centralizada
+    p->hitboxOffset.y =  p->size.y / 2.0f - p->hitbox.height;     // encostada na base
 
 
     // atualizar hitbox
@@ -247,5 +244,5 @@ void PlayerDraw(const Player *p)
     DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);
 
     // hitbox
-    // DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
+    DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
 }
