@@ -1,6 +1,6 @@
 #include "raylib.h"
 #include "player.h"
-// #include "interactables.h"
+#include "interactable.h"
 #include "mapa.h"
 
 int main(void) {
@@ -21,7 +21,7 @@ int main(void) {
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
-    // Caixa caixa = {{64,0, 64,64}};
+    Caixa caixa = {{64,0, 64,64}};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -34,8 +34,8 @@ int main(void) {
 
         PlayerUpdate(&dog, dt, parede); 
         PlayerUpdate(&cat, dt, parede);
-        // CaixaUpdate(&caixa, dt);
-        // empurrarCaixa(&dog, &caixa);
+        CaixaUpdate(&caixa, dt);
+        empurrarCaixa(&dog, &caixa);
 
         // regras do multiplayer (vem depois do playerUpdate)
         carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
@@ -48,7 +48,7 @@ int main(void) {
         PlayerDraw(&dog);
         
         DrawRectangleRec(parede, WHITE);
-        // DrawRectangleRec(caixa.rect, RED);
+        DrawRectangleRec(caixa.rect, RED);
         
         EndDrawing();
 
