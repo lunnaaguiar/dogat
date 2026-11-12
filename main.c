@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "player.h"
-#include "mapa.c"
+#include "interactables.h"
+#include "mapa.h"
 
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
@@ -17,6 +18,8 @@ int main(void) {
     PlayerInit(&cat, "assets/gatinho2-Sheet.png", (Vector2){ 200, 100 }, false, (Vector2) {1,1});
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
+
+    Rectangle caixa = {0,0, 32,32};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -41,6 +44,7 @@ int main(void) {
         PlayerDraw(&dog);
         
         DrawRectangleRec(parede, WHITE);
+        DrawRectangleRec(caixa, RED);
         
         EndDrawing();
 
