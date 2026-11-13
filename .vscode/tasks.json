@@ -13,7 +13,8 @@
         "-o", "${workspaceFolder}/Dogat.exe",
         "-I", "C:/raylib/include",
         "-L", "C:/raylib/lib",
-        "-lraylib", "-lopengl32", "-lgdi32", "-lwinmm"
+        "-lraylib", "-lopengl32", "-lgdi32", "-lwinmm",
+        "{workspaceFolder}/score.c",
       ],
       "group": { "kind": "build", "isDefault": true }
     }

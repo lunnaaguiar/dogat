@@ -3,7 +3,9 @@
 #include "interactable.h"
 #include "stdio.h"
 #include "mapa.h"
+#include "score.h"
 
+/*
 static void SalvarTempo(float min, float sec, float ms) {
     FILE *arq = fopen("Score.txt", "a");
     if (arq == NULL) {
@@ -12,6 +14,7 @@ static void SalvarTempo(float min, float sec, float ms) {
     fprintf(arq, "%02d:%02d:%02d\n", (int)min, (int)sec, (int)ms);
     fclose(arq);
 }
+*/
 
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
@@ -31,14 +34,19 @@ int main(void) {
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
-    float min = 0.0f, sec = 0.0f, ms = 0.0f;
+    // float min = 0.0f, sec = 0.0f, ms = 0.0f;
+    float tempo = 0.0f;
+    
+    Score score;
+    ScoreInit(&score);                      // deixa a lista vazia
+    ScoreCarregar(&score, "Score.txt");   // lê os tempos salvos
 
     Caixa caixa = {{64,0, 64,64}};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
 
-        //Timer
+        /*Timer
         ms += dt * 1000.0f;
         
         if(ms >= 1000.0f) {
@@ -49,6 +57,9 @@ int main(void) {
             sec = 0.0f;
             min += 1.0f;
         }
+        */
+       
+        tempo += dt;
 
         if (IsKeyPressed(KEY_SPACE)) {
             dog.isActive = !dog.isActive;
@@ -56,7 +67,9 @@ int main(void) {
         }
 
         if (IsKeyPressed(KEY_M)){
-            SalvarTempo(min, sec, ms);
+            ScoreInserir(&score, tempo);
+            ScoreSalvar(&score, "Score.txt");
+            tempo = 0.0f;
         }
 
         Rectangle parede = { 400, GetScreenHeight()-100, 100, 100 };
@@ -79,12 +92,22 @@ int main(void) {
         DrawRectangleRec(parede, WHITE);
         DrawRectangleRec(caixa.rect, RED);
 
-        DrawText(TextFormat("Time: %02d:%02d:%02d", (int)min, (int)sec, (int)ms), 10, 40, 20, WHITE);
+        char buf[16];
+        ScoreFormatar(tempo, buf, sizeof(buf));
+        DrawText(TextFormat("Time: %s", buf), 10, 40, 20, WHITE);
+
+        // top 5 do ranking
+        int y = 70, pos = 1;
+        for (NoScore *n = score.inicio; n != NULL && pos <= 5; n = n->prox, pos++) {
+        ScoreFormatar(n->tempo, buf, sizeof(buf));
+        DrawText(TextFormat("%d. %s", pos, buf), 10, y, 20, YELLOW);
+        y += 24;
+        }
         
         EndDrawing();
 
     }
-
+    ScoreLiberar(&score);
     CloseWindow();
     return 0;
 }
