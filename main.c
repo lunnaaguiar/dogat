@@ -67,7 +67,8 @@ int main(void) {
         PlayerUpdate(&dog, dt, parede); 
         PlayerUpdate(&cat, dt, parede);
         CaixaUpdate(&caixa, dt);
-        empurrarCaixa(&dog, &caixa);
+        EmpurrarCaixa(&dog, &caixa, true, &cat);
+        EmpurrarCaixa(&cat, &caixa, false, NULL);
 
         // regras do multiplayer (vem depois do playerUpdate)
         carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro

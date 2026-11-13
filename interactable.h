@@ -12,7 +12,7 @@ typedef struct{
     Texture2D sprite;
 }Caixa;
 
-void empurrarCaixa(Player *dog, Caixa *caixa);
+void EmpurrarCaixa(Player *dog, Caixa *caixa, bool forca, Player *gato);
 void CaixaUpdate(Caixa *c, float dt);
 void CaixaInit(Caixa *c, char *spritePath, float size, Vector2 pos);
 void CaixaDraw(const Caixa *c);
