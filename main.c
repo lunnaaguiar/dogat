@@ -42,6 +42,8 @@ int main(void) {
     ScoreCarregar(&score, "Score.txt");   // lê os tempos salvos
 
     Caixa caixa = {{64,0, 64,64}};
+    Texture2D texCaixa = LoadTexture("assets/caixa-Sheet.png");
+    SetTextureFilter(texCaixa, TEXTURE_FILTER_POINT);   // pixel art
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -58,7 +60,7 @@ int main(void) {
             min += 1.0f;
         }
         */
-       
+
         tempo += dt;
 
         if (IsKeyPressed(KEY_SPACE)) {
@@ -90,7 +92,11 @@ int main(void) {
         PlayerDraw(&dog);
         
         DrawRectangleRec(parede, WHITE);
-        DrawRectangleRec(caixa.rect, RED);
+        DrawTexturePro(texCaixa,
+        (Rectangle){ 0, 0, texCaixa.width, texCaixa.height },  // origem: a imagem toda da caixa
+        caixa.rect,                                             // destino: onde está a caixa (64x64)
+        (Vector2){ 0, 0 },                                      // sem pivô
+        0.0f, WHITE);
 
         char buf[16];
         ScoreFormatar(tempo, buf, sizeof(buf));
@@ -107,6 +113,7 @@ int main(void) {
         EndDrawing();
 
     }
+    UnloadTexture(texCaixa);
     ScoreLiberar(&score);
     CloseWindow();
     return 0;
