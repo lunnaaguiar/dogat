@@ -31,9 +31,12 @@ int main(void) {
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
+    // elementos interativos
+    Caixa caixa;
+    CaixaInit(&caixa, "assets/caixa-Sheet.png", 64, (Vector2){10,0});
+
     float min = 0.0f, sec = 0.0f, ms = 0.0f;
 
-    Caixa caixa = {{64,0, 64,64}};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -77,8 +80,8 @@ int main(void) {
         PlayerDraw(&dog);
         
         DrawRectangleRec(parede, WHITE);
-        DrawRectangleRec(caixa.rect, RED);
-
+        // DrawRectangleRec(caixa.rect, RED);
+        CaixaDraw(&caixa);
         DrawText(TextFormat("Time: %02d:%02d:%02d", (int)min, (int)sec, (int)ms), 10, 40, 20, WHITE);
         
         EndDrawing();

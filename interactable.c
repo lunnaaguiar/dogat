@@ -26,6 +26,25 @@ static void ResolverColisaoCaixaX(Caixa *c, float dx, Rectangle tile){
     }
 }
 
+void CaixaInit(Caixa *c, char *spritePath, float size, Vector2 pos){
+
+    c->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
+    SetTextureFilter(c->sprite, TEXTURE_FILTER_POINT); // pixel art nítida
+
+    // tamanho
+    c->rect.width = size;
+    c->rect.height = size;
+    
+    // posição no spawn
+    c->rect.x = pos.x;
+    c->rect.y = pos.y;
+
+    // padrões
+    c->velY = 0;
+    c->isGround = false;
+
+}
+
 void CaixaUpdate(Caixa *c, float dt){
     c->isGround = false;
     c->velY += GRAVITY * dt;    // 1) gravidade muda a velocidade
@@ -85,4 +104,13 @@ void empurrarCaixa(Player *dog, Caixa *caixa){ // usar hitbox do cachorro para e
     float correcao = caixa->rect.x - posHipotetica;   // onde ficou − onde ia
     dog->pos.x    += correcao;
     dog->hitbox.x += correcao;
+}
+
+void CaixaDraw(const Caixa *c)
+{
+    //Desenha o sprite na tela
+    DrawTexturePro(c->sprite, (Rectangle){0,0,c->sprite.width,c->sprite.height}, c->rect, (Vector2){0,0}, 0, WHITE);
+    
+    // hitbox
+    // DrawRectangleLinesEx(c->rect, 2, RED); // só p visualizar
 }
