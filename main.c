@@ -17,23 +17,42 @@ int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
+    int currentMap = 0;
+    bool finishedGame = false;
+    bool canGoNext = true;
+
+    MapaLoad(currentMap);
 
     Player dog, cat;
     // cachorro
     PlayerInit(&dog, "assets/cachorrinho2-Sheet.png",
-        (Vector2){100, 100}, true,  4.0f, (Vector2){0.8f, 0.6f});
+        configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f});
     dog.facesLeft = false;
     dog.jumpForce = 400.0f;
     // dog.size = (Vector2){ 4.0f * dog.frameWidth, 4.0f * dog.frameHeight }; // substitui pelo parametro 'escala' 
     // gato
     PlayerInit(&cat, "assets/gatinho2-Sheet.png",     
-        (Vector2){200, 100}, false, 2.5f, (Vector2){0.7f, 0.9f});
+        configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f});
     cat.jumpForce = 600.0f; // altura que o gato pula
     cat.facesLeft = true; // pq desenhei do lado contrário
 
     float min = 0.0f, sec = 0.0f, ms = 0.0f;
 
     Caixa caixa = {{64,0, 64,64}};
+
+    Rectangle catBlock = { 700, 400, 80, 200 };
+    Rectangle dogBlock = { 1050, 400, 80, 200 };
+    Rectangle emptyBlock = {0, 0, 0, 0};
+
+    Button catButton = {
+        {300, 450, 60, 20},
+        &catBlock
+    };
+
+    Button dogButton = {
+        {900, 450, 60, 20},
+        &dogBlock
+    };
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -63,15 +82,66 @@ int main(void) {
 
         PlayerUpdate(&dog, dt, parede); 
         PlayerUpdate(&cat, dt, parede);
+        
         CaixaUpdate(&caixa, dt);
         empurrarCaixa(&dog, &caixa);
+        ButtonUpdate(&catButton, &cat, dt);
+        ButtonUpdate(&dogButton, &dog, dt);
 
         // regras do multiplayer (vem depois do playerUpdate)
         carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
+
+        Rectangle dogRect = {
+            dog.pos.x - dog.size.x / 2,
+            dog.pos.y - dog.size.y / 2,
+            dog.size.x,
+            dog.size.y
+        };
+
+        Rectangle catRect = {
+            cat.pos.x - cat.size.x / 2,
+            cat.pos.y - cat.size.y / 2,
+            cat.size.x,
+            cat.size.y
+        };
+
+        bool levelComplete = MapaCompleto(catRect, dogRect);
+
+        if (levelComplete && canGoNext) {
+            currentMap++;
+
+            if (MapaLoad(currentMap)) {
+                dog.pos = configMapa.dogSpawn;
+                cat.pos = configMapa.catSpawn;
+
+                catBlock = configMapa.catBlock;
+                dogBlock = configMapa.dogBlock;
+
+                catButton = (Button){configMapa.catButton, &catBlock};
+                dogButton = (Button){configMapa.dogButton, &dogBlock};
+
+                caixa.rect = configMapa.box;
+
+            } else {
+                finishedGame = true;
+            }
+
+            canGoNext = false;
+        }
+
+        if (!levelComplete) {
+            canGoNext = true;
+        }
         
         BeginDrawing();
-        DrawMapa(); // repetição que desenha cada tile
         ClearBackground(BLACK);
+        DrawMapa(); // repetição que desenha cada tile
+        DrawSaidas();
+        ButtonDraw(&catButton, PURPLE);
+        ButtonDraw(&dogButton, BLUE);
+
+        DrawRectangleRec(catBlock, GRAY);
+        DrawRectangleRec(dogBlock, GRAY);
         DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&cat);
         PlayerDraw(&dog);

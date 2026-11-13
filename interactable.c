@@ -1,6 +1,37 @@
 #include "interactable.h"
 #include "mapa.h"
 
+float MoveTowards(float current, float destiny, float speed)
+{
+    if (current < destiny)
+    {
+        current += speed;
+        if (current > destiny) current = destiny;
+    }
+    else if (current > destiny)
+    {
+        current -= speed;
+        if (current < destiny) current = destiny;
+    }
+
+    return current;
+}
+
+void ButtonUpdate(Button *button, Player *player, float dt){
+
+    float speed = 150;
+
+    if(CheckCollisionRecs(button->rect, player->hitbox)){
+        button->block->y = MoveTowards(button->block->y, 200, speed * dt);
+    }else{ 
+        button->block->y = MoveTowards(button->block->y, 400, speed * dt);
+    }
+}
+
+void ButtonDraw(Button *button, Color cor){
+    DrawRectangleRec(button->rect, cor);
+}
+
 static void ResolverColisaoCaixaY(Caixa *c, Rectangle tile){
     if(!CheckCollisionRecs(c->rect, tile)) return;
 
