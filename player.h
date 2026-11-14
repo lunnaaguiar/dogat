@@ -18,6 +18,7 @@ typedef struct {
     Rectangle hitbox;       // delimita hitbox 
     Vector2 posAntes;       // salvar a posição antes da atualização
     bool emCimaDog;         // avisa que o gatinho está em cima  
+    bool emCimaCaixa;
     bool facesLeft;   // true se o desenho original olha pra esquerda
 
     Texture2D sprite; // coloca o sprite do personagem

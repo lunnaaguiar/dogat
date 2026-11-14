@@ -5,8 +5,7 @@
 #include "raylib.h"
 #include <stdbool.h>
 
-typedef struct  
-{
+typedef struct{
     Rectangle rect;
     Rectangle *block;
 }Button;
@@ -16,10 +15,13 @@ typedef struct
     Rectangle rect;
     float velY;
     bool isGround;
+    Texture2D sprite;
 }Caixa;
 
-void empurrarCaixa(Player *dog, Caixa *caixa);
+void EmpurrarCaixa(Player *dog, Caixa *caixa, bool forca, Player *gato);
 void CaixaUpdate(Caixa *c, float dt);
+void CaixaInit(Caixa *c, char *spritePath, float size, Vector2 pos);
+void CaixaDraw(const Caixa *c);
 
 void ButtonUpdate(Button *button, Player *player, float dt);
 void ButtonDraw(Button *button, Color cor);

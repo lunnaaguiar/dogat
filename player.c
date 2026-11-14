@@ -87,8 +87,8 @@ void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
 
     // posicionamento do gato
     cat->pos.y = topoForte - cat->hitbox.height - cat->hitboxOffset.y;
-    if(difDog.x < 0) cat->isLeft = true; // faz o gatinho olhar pra mesma direção que o cachorro
-    else if(difDog.x > 0) cat->isLeft = false;
+    if(dog->isLeft == true && difDog.x < 0) cat->isLeft = true; // faz o gatinho olhar pra mesma direção que o cachorro
+    else if(dog->isLeft == false && difDog.x > 0 ) cat->isLeft = false;
     cat->pos.x += difDog.x;
     cat->velY = 0;
     cat->isGround = true;
@@ -121,10 +121,11 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, f
     p->isActive = active; // alterna entre os personagens
     p->isLeft = false; // controla a direção do personagem
     
-    // tamanho da hitbox
+    // tamanho da hitbox e colisão
     p->hitbox.width  = p->size.x * hitboxTam.x; // porcentagem da dimensão da hitbox
     p->hitbox.height = p->size.y * hitboxTam.y; 
     p->emCimaDog = false;
+    p->emCimaCaixa = false;
     //
     p->hitboxOffset.x = -p->hitbox.width / 2.0f;                  // centralizada
     p->hitboxOffset.y =  p->size.y / 2.0f - p->hitbox.height;     // encostada na base
