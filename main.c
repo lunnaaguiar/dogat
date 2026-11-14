@@ -39,22 +39,20 @@ int main(void) {
     // elementos interativos
     Caixa caixa;
     CaixaInit(&caixa, "assets/caixa-Sheet.png", 64, (Vector2){10,0});
+    caixa.rect = configMapa.box;
 
     float min = 0.0f, sec = 0.0f, ms = 0.0f;
 
 
-    Rectangle catBlock = { 700, 400, 80, 200 };
-    Rectangle dogBlock = { 1050, 400, 80, 200 };
-    Rectangle emptyBlock = {0, 0, 0, 0};
+    Rectangle catBlock = configMapa.catBlock;
+    Rectangle dogBlock = configMapa.dogBlock;
 
     Button catButton = {
-        {300, 450, 60, 20},
-        &catBlock
+        configMapa.catButton, &catBlock
     };
 
     Button dogButton = {
-        {900, 450, 60, 20},
-        &dogBlock
+        configMapa.dogButton, &dogBlock
     };
 
     while (!WindowShouldClose()) {
@@ -83,14 +81,14 @@ int main(void) {
 
         Rectangle parede = { 400, GetScreenHeight()-100, 100, 100 };
 
-        PlayerUpdate(&dog, dt, parede); 
-        PlayerUpdate(&cat, dt, parede);
+        PlayerUpdate(&dog, dt, catBlock, dogBlock); 
+        PlayerUpdate(&cat, dt, catBlock, dogBlock);
         
         CaixaUpdate(&caixa, dt);
         EmpurrarCaixa(&dog, &caixa, true, &cat);
         EmpurrarCaixa(&cat, &caixa, false, NULL);
-        ButtonUpdate(&catButton, &cat, dt);
-        ButtonUpdate(&dogButton, &dog, dt);
+        ButtonUpdate(&catButton, &cat, dt, configMapa.catBlockIniPos, configMapa.catBlockDestinyPos);
+        ButtonUpdate(&dogButton, &dog, dt, configMapa.dogBlockIniPos, configMapa.dogBlockDestinyPos);
 
         // regras do multiplayer (vem depois do playerUpdate)
         carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
@@ -138,6 +136,7 @@ int main(void) {
         }
         
         BeginDrawing();
+        DrawText(TextFormat("x: %d  y: %d", GetMouseX(), GetMouseY()), 10, 70, 20, YELLOW);
         ClearBackground(BLACK);
         DrawMapa(); // repetição que desenha cada tile
         DrawSaidas();

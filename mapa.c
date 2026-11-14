@@ -27,14 +27,22 @@ bool MapaLoad(int index) {
                 .dogSpawn = {100, 100},
                 .catSpawn = {200, 100},
 
-                .catBlock = {700, 400, 80, 200},
-                .dogBlock = {1050, 400, 80, 200},
+                .catBlockIniPos = 210,
+                .catBlockDestinyPos = 0,
+                .dogBlockIniPos = 100,
+                .dogBlockDestinyPos = 50,
+
+                .catBlock = {455, 0, 80, 200}, //(x, y, width, height)
+                .dogBlock = {1050, 0, 80, 200},
 
                 .catButton = {300, 450, 60, 20},
                 .dogButton = {900, 450, 60, 20},
 
                 .box = {64, 0, 64, 64}
             };
+
+            configMapa.catBlock.y = configMapa.catBlockIniPos;
+            configMapa.dogBlock.y = configMapa.dogBlockIniPos;
 
             exits.catExit = (Rectangle){1100, 500, 64, 64};
             exits.dogExit = (Rectangle){1100, 400, 64, 64};
@@ -47,13 +55,13 @@ bool MapaLoad(int index) {
                 .dogSpawn = {100, 100},
                 .catSpawn = {200, 100},
 
-                .catBlock = {700, 400, 80, 200},
+                /*.catBlock = {700, 400, 80, 200},
                 .dogBlock = {1050, 400, 80, 200},
 
                 .catButton = {300, 450, 60, 20},
                 .dogButton = {900, 450, 60, 20},
 
-                .box = {64, 0, 64, 64}
+                .box = {64, 0, 64, 64}*/
             };
 
             exits.catExit = (Rectangle){1000, 300, 64, 64};

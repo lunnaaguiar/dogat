@@ -25,7 +25,12 @@ typedef struct {
     Vector2 catSpawn;
 
     Rectangle catBlock;
+    float catBlockIniPos;
+    float catBlockDestinyPos;
+
     Rectangle dogBlock;
+    float dogBlockIniPos;
+    float dogBlockDestinyPos;
 
     Rectangle catButton;
     Rectangle dogButton;
