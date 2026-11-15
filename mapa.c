@@ -38,7 +38,9 @@ bool MapaLoad(int index) {
                 .catButton = {300, 450, 60, 20},
                 .dogButton = {900, 450, 60, 20},
 
-                .box = {64, 0, 64, 64}
+                .box = {64, 0, 64, 64},
+
+                .waterPuddle = {1000, 534, 80, 10}  
             };
 
             configMapa.catBlock.y = configMapa.catBlockIniPos;

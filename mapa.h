@@ -36,6 +36,9 @@ typedef struct {
     Rectangle dogButton;
 
     Rectangle box;
+
+    Rectangle waterPuddle;
+    
 } MapaConfig;
 
 extern MapaConfig configMapa;

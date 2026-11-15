@@ -25,6 +25,9 @@ void CaixaUpdate(Caixa *c, float dt);
 void CaixaInit(Caixa *c, char *spritePath, float size, Vector2 pos);
 void CaixaDraw(const Caixa *c);
 
+bool CatTouchedPuddle(Rectangle puddle, const Player *gato);
+void PuddleDraw(Rectangle puddle);
+
 void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float destiny);
 void ButtonDraw(Button *button, Color cor);
 

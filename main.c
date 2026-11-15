@@ -108,9 +108,10 @@ int main(void) {
         };
 
         bool levelComplete = MapaCompleto(catRect, dogRect);
+        bool catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &cat);
 
-        if (levelComplete && canGoNext) {
-            currentMap++;
+        if (levelComplete && canGoNext || catInPuddle) {
+            if(!catInPuddle) currentMap++;
 
             if (MapaLoad(currentMap)) {
                 dog.pos = configMapa.dogSpawn;
@@ -140,6 +141,7 @@ int main(void) {
         ClearBackground(BLACK);
         DrawMapa(); // repetição que desenha cada tile
         DrawSaidas();
+        PuddleDraw(configMapa.waterPuddle);
         ButtonDraw(&catButton, PURPLE);
         ButtonDraw(&dogButton, BLUE);
 

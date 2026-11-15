@@ -179,3 +179,15 @@ void CaixaDraw(const Caixa *c)
     // hitbox
     // DrawRectangleLinesEx(c->rect, 2, RED); // só p visualizar
 }
+
+bool CatTouchedPuddle(Rectangle puddle, const Player *gato){
+    if (puddle.width <= 0 || puddle.height <= 0) return false;
+
+    return CheckCollisionRecs(puddle, gato->hitbox);
+}
+
+void PuddleDraw(Rectangle puddle){
+    if (puddle.width <= 0 || puddle.height <= 0) return;
+
+    DrawRectangleRec(puddle, (Color){ 80, 170, 255, 180 });
+}
