@@ -28,8 +28,8 @@ int ScoreInserir(Score *s, float tempo)
             atual = atual->prox;
             posicao++;
         }
-        novo->prox = atual->prox;        // 1° liga o novo no resto da lista
-        atual->prox = novo;              // 2° liga o anterior no novo
+        novo->prox = atual->prox;        // liga o novo no resto da lista
+        atual->prox = novo;              // liga o anterior no novo
     }
 
     s->total++;
@@ -39,7 +39,7 @@ int ScoreInserir(Score *s, float tempo)
 void ScoreCarregar(Score *s, const char *arquivo)
 {
     FILE *f = fopen(arquivo, "r");
-    if (f == NULL) return;               // ainda não existe
+    if (f == NULL) return;
 
     float t;
     while (fscanf(f, "%f", &t) == 1) {
