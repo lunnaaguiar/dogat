@@ -6,10 +6,10 @@ typedef struct
     float min;
     float sec;
     float ms;
-} Time;
+}Tempo;
 
-void SalvarTempo(Time *time);
-void AtualizarTempo(Time *time, float dt);
-void TimeDraw(const Time *time);
+void SalvarTempo(Tempo *tempo);
+void AtualizarTempo(Tempo *tempo, float dt);
+void TimeDraw(const Tempo *tempo);
 
 #endif

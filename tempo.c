@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 // manipulação de arquivos: salvar tempo no Score.txt
-void SalvarTempo(Time *time) {
+void SalvarTempo(Tempo *time) {
     FILE *arq = fopen("Score.txt", "a");
     if (arq == NULL) {
         return;
@@ -12,7 +12,7 @@ void SalvarTempo(Time *time) {
     fclose(arq);
 }
 
-void AtualizarTempo(Time *time, float dt){
+void AtualizarTempo(Tempo *time, float dt){
     //Timer
     time->ms += dt * 1000.0f;
     
@@ -26,6 +26,6 @@ void AtualizarTempo(Time *time, float dt){
     }
 }
 
-void TimeDraw(const Time *time){
+void TimeDraw(const Tempo *time){
     DrawText(TextFormat("Time: %02d:%02d:%02d", (int)time->min, (int)time->sec, (int)time->ms), 10, 40, 20, WHITE);
 }
