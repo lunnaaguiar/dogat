@@ -4,6 +4,9 @@
 
 #include "mapas/mapa1.h"
 #include "mapas/mapa2.h"
+#include "mapas/mapa3.h"
+#include "mapas/mapa4.h"
+#include "mapas/mapa5.h"
 
 // MAPA DE TESTE 
 int mapa[MAP_H][MAP_W];
@@ -13,7 +16,7 @@ MapaConfig configMapa;
 MapExits exits;
 
 int MapaCount(void) {
-    return 2;
+    return 4;
 }
 
 bool MapaLoad(int index) {
@@ -24,19 +27,62 @@ bool MapaLoad(int index) {
             memcpy(mapa, MAPA1, sizeof(mapa));
 
             configMapa = (MapaConfig){
+                .dogSpawn = {100, 400},
+                .catSpawn = {200, 400},
+
+                .box = {250, 400, 100, 100},
+            };
+
+            configMapa.catBlock.y = configMapa.catBlockIniPos;
+            configMapa.dogBlock.y = configMapa.dogBlockIniPos;
+
+            exits.catExit = (Rectangle){1200, 350, 64, 64};
+            exits.dogExit = (Rectangle){1100, 350, 64, 64};
+            break;
+
+        case 1:
+            memcpy(mapa, MAPA2, sizeof(mapa));
+
+            configMapa = (MapaConfig){
+                .dogSpawn = {100, 400},
+                .catSpawn = {200, 400},
+
+                .waterPuddle = {380, 600, 500, 10}
+            };
+
+            exits.catExit = (Rectangle){1000, 545, 64, 64};
+            exits.dogExit = (Rectangle){1100, 545, 64, 64};
+            break;
+
+        case 2:
+            memcpy(mapa, MAPA3, sizeof(mapa));
+
+            configMapa = (MapaConfig){
+                .dogSpawn = {100, 400},
+                .catSpawn = {200, 400},
+
+                .catBlockIniPos = 480,
+                .catBlockDestinyPos = 610,
+                .dogBlockIniPos = 255,
+                .dogBlockDestinyPos = 55,
+
+                .catBlock = {585, 480, 80, 200}, //(x, y, width, height)
+                .dogBlock = {585, 255, 80, 200},
+
+                .catButton = {300, 590, 60, 20},
+                .dogButton = {900, 590, 60, 20},
+            };
+
+            exits.catExit = (Rectangle){1000, 545, 64, 64};
+            exits.dogExit = (Rectangle){1100, 545, 64, 64};
+            break;
+
+        case 3:
+            memcpy(mapa, MAPA4, sizeof(mapa));
+
+            configMapa = (MapaConfig){
                 .dogSpawn = {100, 100},
                 .catSpawn = {200, 100},
-
-                .catBlockIniPos = 210,
-                .catBlockDestinyPos = 0,
-                .dogBlockIniPos = 100,
-                .dogBlockDestinyPos = 50,
-
-                .catBlock = {455, 0, 80, 200}, //(x, y, width, height)
-                .dogBlock = {1050, 0, 80, 200},
-
-                .catButton = {300, 450, 60, 20},
-                .dogButton = {900, 450, 60, 20},
 
                 .box = {64, 0, 64, 64},
 
@@ -48,26 +94,6 @@ bool MapaLoad(int index) {
 
             exits.catExit = (Rectangle){1100, 500, 64, 64};
             exits.dogExit = (Rectangle){1100, 400, 64, 64};
-            break;
-
-        case 1:
-            memcpy(mapa, MAPA2, sizeof(mapa));
-
-            configMapa = (MapaConfig){
-                .dogSpawn = {100, 100},
-                .catSpawn = {200, 100},
-
-                /*.catBlock = {700, 400, 80, 200},
-                .dogBlock = {1050, 400, 80, 200},
-
-                .catButton = {300, 450, 60, 20},
-                .dogButton = {900, 450, 60, 20},
-
-                .box = {64, 0, 64, 64}*/
-            };
-
-            exits.catExit = (Rectangle){1000, 300, 64, 64};
-            exits.dogExit = (Rectangle){1100, 300, 64, 64};
             break;
 
         default:

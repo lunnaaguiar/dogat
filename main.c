@@ -20,7 +20,7 @@ int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
-    int currentMap = 0;
+    int currentMap = 2;
     bool finishedGame = false;
     bool canGoNext = true;
 
@@ -161,13 +161,13 @@ int main(void) {
         ButtonDraw(&catButton, PURPLE);
         ButtonDraw(&dogButton, BLUE);
 
-        DrawRectangleRec(catBlock, GRAY);
-        DrawRectangleRec(dogBlock, GRAY);
-        DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&cat);
         PlayerDraw(&dog);
         
+        
         DrawRectangleRec(parede, WHITE);
+        DrawRectangleRec(catBlock, PURPLE);
+        DrawRectangleRec(dogBlock, BLUE);
         DrawTexturePro(texCaixa,
         (Rectangle){ 0, 0, texCaixa.width, texCaixa.height },  // origem: a imagem toda da caixa
         caixa.rect,                                             // destino: onde está a caixa (64x64)

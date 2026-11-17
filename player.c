@@ -2,7 +2,6 @@
 #include "mapa.h"
 
 #define GRAVITY   600.0f // gravidade
-#define GROUND_Y  600.0f // chao
 
 // fazer a hitbox andar junto com o personagem
 
@@ -187,13 +186,6 @@ void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2)
     //gravidade
     p->velY += GRAVITY * dt;
     p->pos.y += p->velY * dt; // move
-
-    //verifica se o personagem esta no chao
-    if (p->pos.y + (p->size.y / 2.0f) >= GROUND_Y) {
-        p->pos.y = GROUND_Y - (p->size.y/ 2.0f);
-        p->velY = 0;
-        p->isGround = true;
-    }
     
     // atualizar hitbox y
     AtualizarHitbox(p); 
