@@ -20,7 +20,7 @@ int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
-    int currentMap = 2;
+    int currentMap = 4;
     bool finishedGame = false;
     bool canGoNext = true;
 
