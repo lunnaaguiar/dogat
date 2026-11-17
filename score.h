@@ -21,10 +21,10 @@ int  ScoreInserir(Score *s, float tempo);
 void ScoreCarregar(Score *s, const char *arquivo);
 void ScoreSalvar(const Score *s, const char *arquivo);
 
-// escreve o tempo no formato MM:SS:mmm dentro de buf
+// escreve o tempo no formato MM:SS:mmm
 void ScoreFormatar(float tempo, char *buf, int tamanho);
 
-// libera todos os nós da memória
+
 void ScoreLiberar(Score *s);
 
 #endif
