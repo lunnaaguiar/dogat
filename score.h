@@ -12,19 +12,19 @@ typedef struct {
     int total;         // quantos tempos tem na lista
 } Score;
 
-void ScoreInit(Score *s);
+void ScoreInit(Score *recorde);
 
 // insere o tempo na posição certa (menor primeiro).
-int  ScoreInserir(Score *s, float tempo);
+int  ScoreInserir(Score *recorde, float tempo);
 
 // lê/grava um tempo por linha no arquivo
-void ScoreCarregar(Score *s, const char *arquivo);
-void ScoreSalvar(const Score *s, const char *arquivo);
+void ScoreCarregar(Score *recorde, const char *arquivo);
+void ScoreSalvar(const Score *recorde, const char *arquivo);
 
 // escreve o tempo no formato MM:SS:mmm
 void ScoreFormatar(float tempo, char *buf, int tamanho);
 
 
-void ScoreLiberar(Score *s);
+void ScoreLiberar(Score *recorde);
 
 #endif

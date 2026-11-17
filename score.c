@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void ScoreInit(Score *s)
+void ScoreInit(Score *recorde)
 {
-    s->inicio = NULL;
-    s->total = 0;
+    recorde->inicio = NULL;
+    recorde->total = 0;
 }
 
-int ScoreInserir(Score *s, float tempo)
+int ScoreInserir(Score *recorde, float tempo)
 {
     NoScore *novo = (NoScore *)malloc(sizeof(NoScore));
     if (novo == NULL) return 0;          // sem memória
@@ -16,13 +16,13 @@ int ScoreInserir(Score *s, float tempo)
 
     int posicao = 1;
 
-    if (s->inicio == NULL || tempo < s->inicio->tempo) {
+    if (recorde->inicio == NULL || tempo < recorde->inicio->tempo) {
         // lista vazia ou o novo é melhor
-        novo->prox = s->inicio;
-        s->inicio = novo;
+        novo->prox = recorde->inicio;
+        recorde->inicio = novo;
     } else {
         // anda até o último que ainda é menor ou igual ao novo
-        NoScore *atual = s->inicio;
+        NoScore *atual = recorde->inicio;
         posicao++;
         while (atual->prox != NULL && atual->prox->tempo <= tempo) {
             atual = atual->prox;
@@ -32,28 +32,28 @@ int ScoreInserir(Score *s, float tempo)
         atual->prox = novo;              // liga o anterior no novo
     }
 
-    s->total++;
+    recorde->total++;
     return posicao;
 }
 
-void ScoreCarregar(Score *s, const char *arquivo)
+void ScoreCarregar(Score *recorde, const char *arquivo)
 {
     FILE *f = fopen(arquivo, "r");
     if (f == NULL) return;
 
     float t;
     while (fscanf(f, "%f", &t) == 1) {
-        ScoreInserir(s, t);
+        ScoreInserir(recorde, t);
     }
     fclose(f);
 }
 
-void ScoreSalvar(const Score *s, const char *arquivo)
+void ScoreSalvar(const Score *recorde, const char *arquivo)
 {
     FILE *f = fopen(arquivo, "w");       //  reescreve o arquivo inteiro
     if (f == NULL) return;
 
-    for (NoScore *n = s->inicio; n != NULL; n = n->prox) {
+    for (NoScore *n = recorde->inicio; n != NULL; n = n->prox) {
         fprintf(f, "%.3f\n", n->tempo);
     }
     fclose(f);
@@ -68,14 +68,14 @@ void ScoreFormatar(float tempo, char *buf, int tamanho)
     snprintf(buf, tamanho, "%02d:%02d:%03d", min, sec, ms);
 }
 
-void ScoreLiberar(Score *s)
+void ScoreLiberar(Score *recorde)
 {
-    NoScore *n = s->inicio;
+    NoScore *n = recorde->inicio;
     while (n != NULL) {
         NoScore *prox = n->prox;         // guarda o próximo
         free(n);
         n = prox;
     }
-    s->inicio = NULL;
-    s->total = 0;
+    recorde->inicio = NULL;
+    recorde->total = 0;
 }
