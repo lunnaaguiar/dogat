@@ -17,11 +17,11 @@ int ScoreInserir(Score *s, float tempo)
     int posicao = 1;
 
     if (s->inicio == NULL || tempo < s->inicio->tempo) {
-        // lista vazia ou o novo é melhor (vira o primeiro)
+        // lista vazia ou o novo é melhor
         novo->prox = s->inicio;
         s->inicio = novo;
     } else {
-        // anda até o último nó que ainda é menor ou igual ao novo
+        // anda até o último que ainda é menor ou igual ao novo
         NoScore *atual = s->inicio;
         posicao++;
         while (atual->prox != NULL && atual->prox->tempo <= tempo) {
@@ -72,7 +72,7 @@ void ScoreLiberar(Score *s)
 {
     NoScore *n = s->inicio;
     while (n != NULL) {
-        NoScore *prox = n->prox;         // guarda o próximo antes do free
+        NoScore *prox = n->prox;         // guarda o próximo
         free(n);
         n = prox;
     }
