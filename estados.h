@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "player.h"
 #include "interactable.h"
+#include "mapa.h"
 // #include <stdbool.h>    
 
 typedef enum estados { 
@@ -31,7 +32,7 @@ void AttractModeUpdate();
 void AttractModeDraw();
 
 // 1 - PLAYING
-void PlayingUpdate(Jogo *jogo);
-void PlayingDraw(Jogo *jogo);
+void PlayingUpdate(Jogo *jogo, float dt);
+void PlayingDraw(const Jogo *jogo); // const para não alterar
 
 #endif

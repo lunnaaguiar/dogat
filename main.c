@@ -74,8 +74,8 @@ int main(void) {
         carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
         
         BeginDrawing();
-        DrawMapa(); // repetição que desenha cada tile
         ClearBackground(BLACK);
+        DrawMapa(); // repetição que desenha cada tile
         DrawLine(0, 600, 1280, 600, WHITE);
         PlayerDraw(&cat);
         PlayerDraw(&dog);
