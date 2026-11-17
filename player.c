@@ -136,7 +136,7 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, f
     p->facesLeft = false;   // padrão: sprite olha pra direita
 }
 
-void PlayerUpdate(Player *p, float dt, Rectangle parede)
+void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2)
 {   
     float dx = 0;
     p->isMoving = false;
@@ -177,6 +177,8 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
         }
     }
 
+    ResolverColisaoX(p, dx, block1);
+    ResolverColisaoX(p, dx, block2);
     
     // também salva a posição y anterior
     p->posAntes.y = p->pos.y;
@@ -205,7 +207,9 @@ void PlayerUpdate(Player *p, float dt, Rectangle parede)
             }
         }
     }
-    
+
+    ResolverColisaoY(p, block1);
+    ResolverColisaoY(p, block2);
 
     // animação
     if (p->isMoving){

@@ -1,6 +1,37 @@
 #include "interactable.h"
 #include "mapa.h"
 
+float MoveTowards(float current, float destiny, float speed)
+{
+    if (current < destiny)
+    {
+        current += speed;
+        if (current > destiny) current = destiny;
+    }
+    else if (current > destiny)
+    {
+        current -= speed;
+        if (current < destiny) current = destiny;
+    }
+
+    return current;
+}
+
+void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float destiny){
+
+    float speed = 100;
+
+    if(CheckCollisionRecs(button->rect, player->hitbox)){
+        button->block->y = MoveTowards(button->block->y, destiny, speed * dt);
+    }else{ 
+        button->block->y = MoveTowards(button->block->y, iniPos, speed * dt);
+    }
+}
+
+void ButtonDraw(Button *button, Color cor){
+    DrawRectangleRec(button->rect, cor);
+}
+
 static void ResolverColisaoCaixaY(Caixa *c, Rectangle tile){
     if(!CheckCollisionRecs(c->rect, tile)) return;
 
@@ -147,4 +178,16 @@ void CaixaDraw(const Caixa *c)
     
     // hitbox
     // DrawRectangleLinesEx(c->rect, 2, RED); // só p visualizar
+}
+
+bool CatTouchedPuddle(Rectangle puddle, const Player *gato){
+    if (puddle.width <= 0 || puddle.height <= 0) return false;
+
+    return CheckCollisionRecs(puddle, gato->hitbox);
+}
+
+void PuddleDraw(Rectangle puddle){
+    if (puddle.width <= 0 || puddle.height <= 0) return;
+
+    DrawRectangleRec(puddle, (Color){ 80, 170, 255, 180 });
 }

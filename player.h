@@ -38,7 +38,7 @@ typedef struct {
 // personagem, onde ele spawna, tamanho do sprite e se ele começa ativo ou não
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam);
 //Declaração das funções para usar no player.c
-void PlayerUpdate(Player *p, float dt, Rectangle parede);
+void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2);
 void PlayerDraw(const Player *p);
 void carregarPlayerMulti(Player * dog, Player * cat);
 
