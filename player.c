@@ -59,7 +59,7 @@ static void ResolverColisaoY(Player *p, Rectangle bloco){
     AtualizarHitbox(p);
 }
 
-void carregarPlayerMulti(Player * dog, Player * cat){ // forte, fraco
+void CarregarGato(Player * dog, Player * cat){ // forte, fraco
     // dog = forte
     // cat = fraco
 

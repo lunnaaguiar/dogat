@@ -83,7 +83,7 @@ int main(void) {
         ButtonUpdate(&dogButton, &dog, dt, configMapa.dogBlockIniPos, configMapa.dogBlockDestinyPos);
 
         // regras do multiplayer (vem depois do playerUpdate)
-        carregarPlayerMulti(&dog, &cat); // colisão pro gato subir no cachorro
+        CarregarGato(&dog, &cat); // colisão pro gato subir no cachorro
 
         Rectangle dogRect = {
             dog.pos.x - dog.size.x / 2,
