@@ -10,7 +10,7 @@
 
 // #include <stdbool.h>    
 
-typedef enum estados { 
+typedef enum { 
     ATTRACT_MODE, PLAYING //, PAUSE, MENU
 }Estado;
 
