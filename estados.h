@@ -20,16 +20,25 @@ typedef struct{
 
     Rectangle block1;
     Rectangle block2;
-    Rectangle catBlock;
     Rectangle dogBlock;
+    Rectangle catBlock;
     Caixa caixa;
+    Button dogButton;
+    Button catButton;
+
+    Rectangle dogRect;
+    Rectangle catRect;
 
     // mapa e fase
     int currentMap;
     bool finishedGame;
     bool canGoNext;
+    bool levelComplete;
+    bool catInPuddle;
 
     Score score;
+
+    float tempo;
 }Jogo;
 
 typedef struct{
@@ -43,6 +52,6 @@ void AttractModeDraw(const Attract *attract);
 
 // 1 - PLAYING
 void PlayingUpdate(Jogo *jogo, float dt);
-void PlayingDraw(const Jogo *jogo); // const para não alterar
+void PlayingDraw(Jogo *jogo); // const para não alterar
 
 #endif
