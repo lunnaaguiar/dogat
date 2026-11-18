@@ -40,6 +40,6 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, f
 //Declaração das funções para usar no player.c
 void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2);
 void PlayerDraw(const Player *p);
-void carregarPlayerMulti(Player * dog, Player * cat);
+void CarregarGato(Player * dog, Player * cat);
 
 #endif

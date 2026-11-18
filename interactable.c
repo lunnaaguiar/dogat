@@ -122,22 +122,12 @@ void EmpurrarCaixa(Player *p, Caixa *caixa, bool forca, Player *gato){ // usar h
     // se forte (cachorro)
     if(forca){
         float caixaAntes = caixa->rect.x;
+        // caixa vai pra frente do cachorro vv
         if (dx > 0) caixa->rect.x = p->hitbox.x + p->hitbox.width;              // andando pra direita    
         else caixa->rect.x = p->hitbox.x - caixa->rect.width;                   // andando pra esquerda                      
         
         // onde a caixa iria se atravessasse as paredes
         float posHipotetica = caixa->rect.x;
-
-        // caixa empurra gato
-        if(gato && CheckCollisionRecs(gato->hitbox, caixa->rect) && !gato->emCimaCaixa){
-            float xCorreto;
-            if (dx > 0) xCorreto = caixa->rect.x + caixa->rect.width;       // direita -- gato na frente da caixa
-            else        xCorreto = caixa->rect.x - gato->hitbox.width;      // esquerda - gato atrás da caixa
-
-            float correcao = xCorreto - gato->hitbox.x;
-            gato->pos.x    += correcao;
-            gato->hitbox.x += correcao;
-        }
 
         // colisão com mapa
         for(int i=0; i<MAP_H; i++){
@@ -147,9 +137,51 @@ void EmpurrarCaixa(Player *p, Caixa *caixa, bool forca, Player *gato){ // usar h
                     ResolverColisaoCaixaX(caixa, dx, tile);;
                 }
             }
+        }           // corrige a caixa
+        
+        // caixa empurra gato
+        if(gato && CheckCollisionRecs(gato->hitbox, caixa->rect) && !gato->emCimaCaixa){ // gato vai pra frente da caixa
+            float xCorreto;
+            if (dx > 0) xCorreto = caixa->rect.x + caixa->rect.width;       // direita -- gato na frente da caixa
+            else        xCorreto = caixa->rect.x - gato->hitbox.width;      // esquerda - gato atrás da caixa
+
+            float correcao = xCorreto - gato->hitbox.x;
+            gato->pos.x    += correcao;
+            gato->hitbox.x += correcao;
+            
+            for(int i=0; i<MAP_H; i++){ // vai verificar os tiles (paredes) no gato pra ele não pular pra fora da tela
+                for(int j=0; j<MAP_W; j++){
+
+                    if (mapa[i][j] == 1){
+                        Rectangle tile = {j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE};
+                    
+                        if(CheckCollisionRecs(gato->hitbox, tile)){
+                            // x correto do gato - arruma a posição do gato que entraria na parede
+                            if(dx > 0) xCorreto = tile.x - gato->hitbox.width;
+                            else xCorreto = tile.x + tile.width;
+                        }           
+                    }
+                }   
+            }
+            
+            // aplica no gato
+            correcao = xCorreto - gato->hitbox.x;
+            gato->pos.x    += correcao;
+            gato->hitbox.x += correcao;
+
+            // - - - - - -
+
+            // x correto da caixa (atrás do gato)- arrumar a caixa atrás do gato
+            if(dx > 0) xCorreto = gato->hitbox.x - caixa->rect.width;
+            else xCorreto = gato->hitbox.x + gato->hitbox.width;
+            
+            // aplica na caixa
+            correcao = xCorreto - caixa->rect.x;
+            caixa->rect.x += correcao;
         }
 
-        float correcao = caixa->rect.x - posHipotetica;             // correção do cachorro tem posHipotetica, porque ele "atravessa caixa"
+
+        float correcao = caixa->rect.x - posHipotetica;  // correção do cachorro tem posHipotetica, porque ele "atravessa caixa"
         p->pos.x    += correcao;
         p->hitbox.x += correcao;
 
