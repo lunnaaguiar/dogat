@@ -34,24 +34,22 @@ static void ResolverColisaoX(Player *p, float dx, Rectangle obstaculo)
 static void ResolverColisaoY(Player *p, Rectangle bloco){
 
     if (!CheckCollisionRecs(p->hitbox, bloco)) return;
+    
+    // quanto a hitbox entrou no bloco por cima e por baixo
+    float entrouPorCima  = (p->hitbox.y + p->hitbox.height) - bloco.y;
+    float entrouPorBaixo = (bloco.y + bloco.height) - p->hitbox.y;
 
     float yCorreto;
 
-    if ( p->velY > 0 ) { //caindo
-        // caindo: pousou em cima do bloco
-        yCorreto = bloco.y - p->hitbox.height; // negativo sobe
-
-        p->velY = 0;// zera a velocidade vertical
-        p-> isGround = true;// marca que está no chão
-
-    } else if ( p->velY < 0 ) { // subindo
-        // subindo: bateu a cabeça embaixo do bloco
-        yCorreto = bloco.y + bloco.height;     // positivo desce
-        
-        p->velY = 0;// zera a velocidade vertical
-
+    if (entrouPorCima < entrouPorBaixo) {
+        // mais perto do topo: fica em cima do bloco
+        yCorreto = bloco.y - p->hitbox.height;
+        if (p->velY > 0) p->velY = 0;
+        p->isGround = true;
     } else {
-        return;
+        // mais perto do fundo: bateu a cabeça embaixo do bloco
+        yCorreto = bloco.y + bloco.height;
+        if (p->velY < 0) p->velY = 0;
     }
 
     float correcao = yCorreto - p->hitbox.y;
@@ -109,7 +107,7 @@ void CarregarGato(Player * dog, Player * cat){ // forte, fraco
                     float baseGato = cat->hitbox.y + cat->hitbox.height;
                     float correcao = baseGato - dog->hitbox.y;
                     dog->pos.y += correcao;
-                    dog->velY = 0; // zera a
+                    dog->velY = 0; // zera a velocidade
                     AtualizarHitbox(dog);
                 }           
             }
@@ -186,8 +184,12 @@ void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2)
     p->posAntes.x = p->pos.x; // salva a posição x antes de atualizar
     p->pos.x += dx;
     
-    // atualizar hitbox x
+    // limites do mapa
+    if(p->hitbox.x < 0) p->pos.x += (0 - p->hitbox.x); // <--
+    else if((p->hitbox.x + p->hitbox.width) > 1280) p->pos.x -= (p->hitbox.x + p->hitbox.width) - 1280; // -->
+    
     AtualizarHitbox(p); 
+    
     // ResolverColisaoX(p, dx, parede);
 
     // colisão com os tiles do mapa x
