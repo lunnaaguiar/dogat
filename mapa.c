@@ -84,16 +84,40 @@ bool MapaLoad(int index) {
                 .dogSpawn = {100, 100},
                 .catSpawn = {200, 100},
 
-                .box = {64, 0, 64, 64},
+                .box = {250, 400, 100, 100},
 
-                .waterPuddle = {1000, 534, 80, 10}  
+                .waterPuddle = {630, 406, 450, 10},
             };
 
-            configMapa.catBlock.y = configMapa.catBlockIniPos;
-            configMapa.dogBlock.y = configMapa.dogBlockIniPos;
+            exits.catExit = (Rectangle){1200, 348, 64, 64};
+            exits.dogExit = (Rectangle){1100, 348, 64, 64};
+            break;
 
-            exits.catExit = (Rectangle){1100, 500, 64, 64};
-            exits.dogExit = (Rectangle){1100, 400, 64, 64};
+        case 4:
+            memcpy(mapa, MAPA5, sizeof(mapa));
+
+            configMapa = (MapaConfig){
+                .dogSpawn = {100, 590},
+                .catSpawn = {100, 550},
+
+                .box = {700, 590, 100, 100},
+
+                .waterPuddle = {475, 600, 300, 10},
+                
+                .catBlockIniPos = 480,
+                .catBlockDestinyPos = 610,
+                .dogBlockIniPos = 270,
+                .dogBlockDestinyPos = 55,
+
+                .catBlock = {259, 480, 60, 150}, //(x, y, width, height)
+                .dogBlock = {259, 270, 60, 150},
+
+                .catButton = {180, 590, 60, 20},
+                .dogButton = {350, 590, 60, 20},
+            };
+
+            exits.catExit = (Rectangle){1200, 348, 64, 64};
+            exits.dogExit = (Rectangle){1100, 348, 64, 64};
             break;
 
         default:

@@ -19,7 +19,7 @@ float MoveTowards(float current, float destiny, float speed)
 
 void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float destiny){
 
-    float speed = 100;
+    float speed = 300;
 
     if(CheckCollisionRecs(button->rect, player->hitbox)){
         button->block->y = MoveTowards(button->block->y, destiny, speed * dt);
