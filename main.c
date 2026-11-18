@@ -59,6 +59,7 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
+        if(dt > 0.06) dt = 0.06;
         BeginDrawing();
         switch (estadoAtual)
         {
