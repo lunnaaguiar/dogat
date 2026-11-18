@@ -11,7 +11,7 @@
 // #include <stdbool.h>    
 
 typedef enum { 
-    ATTRACT_MODE, PLAYING //, PAUSE, MENU
+    ATTRACT_MODE, PLAYING, VICTORY //, PAUSE, MENU
 }Estado;
 
 typedef struct{

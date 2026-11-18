@@ -45,7 +45,7 @@ int main(void) {
 
     // TEMPO
     jogo.tempo = 0.0f;
-    
+        
     // bloco
     jogo.catBlock = configMapa.catBlock;
     jogo.dogBlock = configMapa.dogBlock;
@@ -73,6 +73,12 @@ int main(void) {
         case PLAYING:
             PlayingUpdate(&jogo, dt);
             PlayingDraw(&jogo);
+            if(jogo.finishedGame) estadoAtual = VICTORY;
+            break;
+
+        case VICTORY:
+            ClearBackground(BLACK);
+            DrawText("VOCÊ GANHOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10,10, 12, WHITE);
             break;
 
         default:

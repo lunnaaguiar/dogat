@@ -3,7 +3,7 @@
 
 #define GRAVITY   600.0f // gravidade
 
-// fazer a hitbox andar junto com o personagem
+// fazer a hitbox andar junto com o pe;rsonagem
 
 static void AtualizarHitbox(Player *p){ // multiplicadores
 
@@ -38,7 +38,19 @@ static void ResolverColisaoY(Player *p, Rectangle bloco){
     // quanto a hitbox entrou no bloco por cima e por baixo
     float entrouPorCima  = (p->hitbox.y + p->hitbox.height) - bloco.y;
     float entrouPorBaixo = (bloco.y + bloco.height) - p->hitbox.y;
+    // quanto a hitbox entrou no bloco pelo lado
+    float entrouPelaDireita  = (bloco.x + bloco.width) - p->hitbox.x;
+    float entrouPelaEsquerda  = (p->hitbox.x + p->hitbox.width) - bloco.x;
+    
+    float entrouDeLado;
+    if(entrouPelaDireita < entrouPelaEsquerda) entrouDeLado = entrouPelaDireita;
+    else entrouDeLado= entrouPelaEsquerda;
+    
+    float entrouEmY;
+    if(entrouPorCima < entrouPorBaixo) entrouEmY = entrouPorCima;
+    else entrouEmY = entrouPorBaixo;
 
+    if(entrouDeLado < entrouEmY) return; // se  o problema for na parede, sai da função
     float yCorreto;
 
     if (entrouPorCima < entrouPorBaixo) {
@@ -97,10 +109,26 @@ void CarregarGato(Player * dog, Player * cat){ // forte, fraco
             if (mapa[i][j] == 1){
                 Rectangle tile = {j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE};
                 if(CheckCollisionRecs(cat->hitbox, tile)){
-                    float correcaoGato = (tile.y + tile.height) - cat->hitbox.y;
+                    // verificar a direção da colisão - ENTROU...
+                    float PelaEsquerda = (cat->hitbox.x + cat->hitbox.width) - tile.x; 
+                    float PelaDireita = (tile.x + tile.width) - cat->hitbox.x;  
+                    float correcaoGato = (tile.y + tile.height) - cat->hitbox.y; // entrou por ->baixo<-
+    
+                    float peloLado;
+                    if(PelaEsquerda < PelaDireita) peloLado = PelaEsquerda;
+                    else peloLado = PelaDireita;
+                    
+                    
+                    if(peloLado < correcaoGato){
+                        if(PelaEsquerda < PelaDireita) cat->pos.x -= PelaEsquerda;
+                        else cat->pos.x += PelaDireita;
+                        
+                        AtualizarHitbox(cat);
+                        cat->emCimaDog = false;
+                        continue;
+                    }
                     
                     cat->pos.y += correcaoGato;
-                    
                     AtualizarHitbox(cat);
                     
                     // limitar pulo do cachorro no pé do gato

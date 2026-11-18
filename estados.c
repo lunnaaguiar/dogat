@@ -90,6 +90,7 @@ void PlayingUpdate(Jogo *jogo, float dt)
     if (!jogo->levelComplete) {
         jogo->canGoNext = true;
     }
+
 }
 
 void PlayingDraw(Jogo *jogo)

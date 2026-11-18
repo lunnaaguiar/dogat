@@ -11,7 +11,6 @@
 
 #define GRAVITY   600.0f // gravidade
 
-
 extern int mapa[MAP_H][MAP_W];
 
 typedef struct {
