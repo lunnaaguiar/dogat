@@ -5,17 +5,6 @@
 #include "mapa.h"
 #include "score.h"
 
-/*
-static void SalvarTempo(float min, float sec, float ms) {
-    FILE *arq = fopen("Score.txt", "a");
-    if (arq == NULL) {
-        return;
-    }
-    fprintf(arq, "%02d:%02d:%02d\n", (int)min, (int)sec, (int)ms);
-    fclose(arq);
-}
-*/
-
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
     SetWindowPosition(100, 100);
@@ -32,7 +21,7 @@ int main(void) {
         configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f});
     dog.facesLeft = false;
     dog.jumpForce = 400.0f;
-    // dog.size = (Vector2){ 4.0f * dog.frameWidth, 4.0f * dog.frameHeight }; // substitui pelo parametro 'escala' 
+
     // gato
     PlayerInit(&cat, "assets/gatinho2-Sheet.png",     
         configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f});
@@ -68,19 +57,6 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
-
-        /*Timer
-        ms += dt * 1000.0f;
-        
-        if(ms >= 1000.0f) {
-            ms = 0.0f;
-            sec += 1.0f;
-        }
-        if(sec >= 60.0f) {
-            sec = 0.0f;
-            min += 1.0f;
-        }
-        */
 
         tempo += dt;
 
