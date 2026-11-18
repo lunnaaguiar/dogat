@@ -94,6 +94,30 @@ void CarregarGato(Player * dog, Player * cat){ // forte, fraco
 
     AtualizarHitbox(cat);
 
+    for(int i=0; i<MAP_H; i++){
+        for(int j=0; j<MAP_W; j++){
+            if (mapa[i][j] == 1){
+                Rectangle tile = {j*TILE_SIZE, i*TILE_SIZE, TILE_SIZE, TILE_SIZE};
+                if(CheckCollisionRecs(cat->hitbox, tile)){
+                    float correcaoGato = (tile.y + tile.height) - cat->hitbox.y;
+                    
+                    cat->pos.y += correcaoGato;
+                    
+                    AtualizarHitbox(cat);
+                    
+                    // limitar pulo do cachorro no pé do gato
+                    float baseGato = cat->hitbox.y + cat->hitbox.height;
+                    float correcao = baseGato - dog->hitbox.y;
+                    dog->pos.y += correcao;
+                    dog->velY = 0; // zera a
+                    AtualizarHitbox(dog);
+                }           
+            }
+        }
+    }
+
+    
+    
 } 
 
 void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
