@@ -10,12 +10,17 @@
 
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
+    InitAudioDevice(); // preparar pra os sons
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
     int currentMap = 0;
     bool finishedGame = false;
     bool canGoNext = true;
     
+    // música principal
+    Music music = LoadMusicStream("assets/sons/Time_for_adventure.mp3");
+    PlayMusicStream(music);
+
     MapaLoad(currentMap);
     
     Estado estadoAtual = ATTRACT_MODE;
@@ -79,6 +84,7 @@ int main(void) {
     ScoreCarregar(&jogo.score, "Score.txt");     // lê os tempos salvos
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(music);
         float dt = GetFrameTime();
         if(dt > 0.06) dt = 0.06;
         BeginDrawing();
@@ -114,6 +120,8 @@ int main(void) {
     }
     // UnloadTexture(texCaixa);
     ScoreLiberar(&jogo.score);
+    UnloadMusicStream(music);   
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }
