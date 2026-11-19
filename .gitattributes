@@ -1,0 +1,7 @@
+* text=auto
+Makefile text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+
+# O Makefile e o build-linux.yml (e os .c/.h) têm o fim de linha do Windows (\r\n).
+# No Linux, o make lê esse \r como parte do comando: o gcc recebe -lX11\r e quebra.
