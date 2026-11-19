@@ -146,7 +146,7 @@ void CarregarGato(Player * dog, Player * cat){ // forte, fraco
     
 } 
 
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam, Sons efeitosSonoros) //adicionar aqui as variaveis para os personagem(ex: jumpforce, speed, etc)
 {
     p->sprite = LoadTexture(spritePath); // coloca o sprite do personagem
     SetTextureFilter(p->sprite, TEXTURE_FILTER_POINT); // pixel art nítida
@@ -183,6 +183,9 @@ void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, f
     // atualizar hitbox
     AtualizarHitbox(p);
     p->facesLeft = false;   // padrão: sprite olha pra direita
+
+    // sons
+    p->som.pulo = efeitosSonoros.pulo;
 }
 
 void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2)
@@ -206,6 +209,7 @@ void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2)
         if((IsKeyPressed(KEY_UP) || IsKeyDown(KEY_W)) && p->isGround) {
             p->velY = -p->jumpForce;
             p->isGround = false;
+            PlaySound(p->som.pulo);
         }
     }
 

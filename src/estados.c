@@ -23,6 +23,8 @@ void AttractModeUpdate(Attract *attract, float dt){
             attract->cat.jumpForce = GetRandomValue(400, 600);
             attract->cat.velY = -attract->cat.jumpForce;
             attract->cat.isGround = false;
+            // som do pulo
+            PlaySound(attract->cat.som.pulo);
         }
     } 
 
@@ -78,6 +80,8 @@ void AttractModeUpdate(Attract *attract, float dt){
             attract->dog.jumpForce = GetRandomValue(400, 600);
             attract->dog.velY = -attract->dog.jumpForce;
             attract->dog.isGround = false;
+            // som do pulo
+            PlaySound(attract->dog.som.pulo);
         }
     } 
 

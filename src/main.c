@@ -10,12 +10,27 @@
 
 int main(void) {
     InitWindow(TILE_SIZE*MAP_W, TILE_SIZE*MAP_H, "Dogat"); // 1280x800 (40x25 tiles)
+    InitAudioDevice(); // preparar pra os sons
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
     int currentMap = 0;
     bool finishedGame = false;
     bool canGoNext = true;
     
+    // - - - - - - - -
+    // música principal
+    Music music = LoadMusicStream("assets/sons/Time_for_adventure.mp3");
+    PlayMusicStream(music);
+    
+    // struct sons
+    Sons efeitosSonorosGato = {
+        LoadSound("assets/sons/larchrow-8bit-arcade-sfx_jump_07.wav")
+    };
+    Sons efeitosSonorosCachorro = {
+        LoadSound("assets/sons/larchrow-8bit-arcade-sfx_jump_07.wav")
+    };
+    // - - - - - - - -
+
     MapaLoad(currentMap);
     
     Estado estadoAtual = ATTRACT_MODE;
@@ -29,13 +44,13 @@ int main(void) {
     Player dog, cat;
     // cachorro
     PlayerInit(&jogo.dog, "assets/sprites/cachorrinho2-Sheet.png",
-        configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f});
+        configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f}, efeitosSonorosCachorro);
         jogo.dog.facesLeft = false;
         jogo.dog.jumpForce = 400.0f;
 
     // gato
     PlayerInit(&jogo.cat, "assets/sprites/gatinho2-Sheet.png",     
-        configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f});
+        configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f}, efeitosSonorosGato);
         jogo.cat.jumpForce = 600.0f; // altura que o gato pula
         jogo.cat.facesLeft = true; // pq desenhei do lado contrário
 
@@ -61,17 +76,17 @@ int main(void) {
 
     // cachorro
     PlayerInit(&attract.dog, "assets/sprites/cachorrinho2-Sheet.png",
-        configMapa.dogSpawn, true,  6.0f, (Vector2){0.8f, 0.6f});
+        configMapa.dogSpawn, true,  6.0f, (Vector2){0.8f, 0.6f}, efeitosSonorosCachorro);
         attract.dog.facesLeft = false;
         attract.dog.jumpForce = 400.0f;
-        attract.dog.speed = 300.0f;
+        attract.dog.speed = 400.0f;
         
     // gato
     PlayerInit(&attract.cat, "assets/sprites/gatinho2-Sheet.png",     
-        configMapa.catSpawn, false, 3.5f, (Vector2){0.7f, 0.9f});
+        configMapa.catSpawn, false, 3.5f, (Vector2){0.7f, 0.9f}, efeitosSonorosGato);
         attract.cat.jumpForce = 600.0f; // altura que o gato pula
         attract.cat.facesLeft = true; // pq desenhei do lado contrário
-        attract.dog.speed = 300.0f;
+        attract.cat.speed = 450.0f;
     /* - - - - - - - - - - - - - - - - - - - - -*/
 
 
@@ -79,6 +94,7 @@ int main(void) {
     ScoreCarregar(&jogo.score, "Score.txt");     // lê os tempos salvos
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(music);
         float dt = GetFrameTime();
         if(dt > 0.06) dt = 0.06;
         BeginDrawing();
@@ -114,6 +130,8 @@ int main(void) {
     }
     // UnloadTexture(texCaixa);
     ScoreLiberar(&jogo.score);
+    UnloadMusicStream(music);   
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

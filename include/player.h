@@ -5,6 +5,9 @@
 #include <stdbool.h>
 
 typedef struct {
+    Sound pulo;
+}Sons;
+typedef struct {
     Vector2 pos;
     Vector2 size;
     float speed;
@@ -32,11 +35,14 @@ typedef struct {
     int frameHeight; // altura de um frame
     bool isMoving; // só é animado se estiver andando
 
+    // sons
+    Sons som;
+
 } Player;
 
 
 // personagem, onde ele spawna, tamanho do sprite e se ele começa ativo ou não
-void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam);
+void PlayerInit(Player *p, const char *spritePath, Vector2 start, bool active, float escala, Vector2 hitboxTam, Sons efeitosSonoros);
 //Declaração das funções para usar no player.c
 void PlayerUpdate(Player *p, float dt, Rectangle block1, Rectangle block2);
 void PlayerDraw(const Player *p);
