@@ -41,9 +41,17 @@ typedef struct{
     float tempo;
 }Jogo;
 
+typedef struct {
+    int direcao;
+    float tempo;
+}Mov;
+
+
 typedef struct{
     Player dog;
     Player cat;
+    Mov movDog;
+    Mov movCat;
 }Attract;
 
 // 0 - ATTRACT MODE

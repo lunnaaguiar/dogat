@@ -5,18 +5,7 @@
 // #include "interactable.h"
 
 // 0 - ATTRACT MODE
-void AttractModeUpdate(Attract *attract, float dt)
-{
-    // fazer o bicho andar -> anda pra um lado aleatório, espera e repete
-    // 1. andar: pos.x muda de acordo com direção, speed e dt
-    GetRandomValue(1, 2);
-    attract->dog.pos.x = attract->dog.speed * dt;
-
-    // 2. descontar o dt do tempo restante
-    // 3. se o tempo restante acabou (<= 0):
-    //       sortear nova direção (-1, 0 ou 1)
-    //       sortear novo tempo restante
-}
+void AttractModeUpdate(Attract *attract, float dt);
 
 void AttractModeDraw(const Attract *attract);
 
