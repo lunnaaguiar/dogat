@@ -30,14 +30,14 @@ int main(void) {
     // cachorro
     PlayerInit(&jogo.dog, "assets/cachorrinho2-Sheet.png",
         configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f});
-    jogo.dog.facesLeft = false;
-    jogo.dog.jumpForce = 400.0f;
+        jogo.dog.facesLeft = false;
+        jogo.dog.jumpForce = 400.0f;
 
     // gato
     PlayerInit(&jogo.cat, "assets/gatinho2-Sheet.png",     
         configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f});
-    jogo.cat.jumpForce = 600.0f; // altura que o gato pula
-    jogo.cat.facesLeft = true; // pq desenhei do lado contrário
+        jogo.cat.jumpForce = 600.0f; // altura que o gato pula
+        jogo.cat.facesLeft = true; // pq desenhei do lado contrário
 
     // elementos interativos
     CaixaInit(&jogo.caixa, "assets/caixa-Sheet.png", 64, (Vector2){10,0});    
@@ -53,6 +53,27 @@ int main(void) {
     jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock};
     jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock};
     /* - - - - - - - - - - - - - - - - - - - - -*/
+    
+    /* - - - - - - - - - - - - - - - - - - - - -*/
+    Attract attract = {0};
+    attract.cat = jogo.cat;
+    attract.dog = jogo.dog;
+
+    // cachorro
+    PlayerInit(&attract.dog, "assets/cachorrinho2-Sheet.png",
+        configMapa.dogSpawn, true,  6.0f, (Vector2){0.8f, 0.6f});
+        attract.dog.facesLeft = false;
+        attract.dog.jumpForce = 400.0f;
+        attract.dog.speed = 300.0f;
+        
+    // gato
+    PlayerInit(&attract.cat, "assets/gatinho2-Sheet.png",     
+        configMapa.catSpawn, false, 3.5f, (Vector2){0.7f, 0.9f});
+        attract.cat.jumpForce = 600.0f; // altura que o gato pula
+        attract.cat.facesLeft = true; // pq desenhei do lado contrário
+        attract.dog.speed = 300.0f;
+    /* - - - - - - - - - - - - - - - - - - - - -*/
+
 
     ScoreInit(&jogo.score);                      // deixa a lista vazia
     ScoreCarregar(&jogo.score, "Score.txt");     // lê os tempos salvos
@@ -67,7 +88,8 @@ int main(void) {
             /* code */
             DrawText("Teste ATTRACT MODE", 10,10, 12, WHITE);
             if (IsKeyPressed(KEY_ENTER)) estadoAtual = PLAYING;
-            
+            AttractModeUpdate(&attract, dt);
+            AttractModeDraw(&attract);
             break;
             
 
