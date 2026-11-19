@@ -2,11 +2,11 @@
 #include "raylib.h"
 #include "string.h"
 
-#include "mapas/mapa1.h"
-#include "mapas/mapa2.h"
-#include "mapas/mapa3.h"
-#include "mapas/mapa4.h"
-#include "mapas/mapa5.h"
+#include "data/maps/mapa1.h"
+#include "data/maps/mapa2.h"
+#include "data/maps/mapa3.h"
+#include "data/maps/mapa4.h"
+#include "data/maps/mapa5.h"
 
 // MAPA DE TESTE 
 int mapa[MAP_H][MAP_W];
