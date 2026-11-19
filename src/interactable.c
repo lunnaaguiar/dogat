@@ -221,5 +221,16 @@ bool CatTouchedPuddle(Rectangle puddle, const Player *gato){
 void PuddleDraw(Rectangle puddle){
     if (puddle.width <= 0 || puddle.height <= 0) return;
 
+    /*static Texture2D puddleText;
+    static bool loaded = false;
+
+    if (!loaded){
+    puddleText = LoadTexture("assets/sprites/agua.png");
+    SetTextureFilter(puddleText, TEXTURE_FILTER_POINT);
+    loaded = true;
+    }
+
+    DrawTextureEx(puddleText, (Vector2){puddle.x, puddle.y}, 1.0f, 1.0f, WHITE);*/
+
     DrawRectangleRec(puddle, (Color){ 80, 170, 255, 180 });
 }

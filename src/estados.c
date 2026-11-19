@@ -210,6 +210,10 @@ void PlayingDraw(Jogo *jogo)
     // BeginDrawing();
 
     ClearBackground(BLACK);
+    // elementos de interação
+    CaixaDraw(&jogo->caixa);
+    DrawRectangleRec(jogo->catBlock, PURPLE);
+    DrawRectangleRec(jogo->dogBlock, BLUE);
 
     DrawMapa(); // repetição que desenha cada tile (puramente visual, a colisão é feita no player.c)
     DrawSaidas();
@@ -218,11 +222,6 @@ void PlayingDraw(Jogo *jogo)
     // desenhos dos players
     PlayerDraw(&jogo->cat);
     PlayerDraw(&jogo->dog);
-
-    // elementos de interação
-    DrawRectangleRec(jogo->catBlock, PURPLE);
-    DrawRectangleRec(jogo->dogBlock, BLUE);
-    CaixaDraw(&jogo->caixa);
     
     // botões
     ButtonDraw(&jogo->catButton, PURPLE); 
