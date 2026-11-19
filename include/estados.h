@@ -36,7 +36,8 @@ typedef struct{
     bool levelComplete;
     bool catInPuddle;
     Texture2D fundos[5];
-
+    Texture2D ceu;
+    
     Score score;
 
     float tempo;
