@@ -148,12 +148,6 @@ void PlayingUpdate(Jogo *jogo, float dt)
         jogo->cat.isActive = !jogo->cat.isActive;
     }
 
-    if (IsKeyPressed(KEY_M)){
-        ScoreInserir(&jogo->score, jogo->tempo);
-        ScoreSalvar(&jogo->score, "Score.txt");
-        jogo->tempo = 0.0f;
-    }
-
     // player update
     PlayerUpdate(&jogo->dog, dt, jogo->catBlock, jogo->dogBlock);
     PlayerUpdate(&jogo->cat, dt, jogo->catBlock, jogo->dogBlock);
@@ -184,7 +178,7 @@ void PlayingUpdate(Jogo *jogo, float dt)
 
     // parte sem função ainda:
     jogo->levelComplete = MapaCompleto(jogo->catRect, jogo->dogRect);
-    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat);
+    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat) || IsKeyPressed(KEY_R);
 
     if (jogo->levelComplete && jogo->canGoNext || jogo->catInPuddle) {
         if(!jogo->catInPuddle) jogo->currentMap++;
@@ -193,11 +187,16 @@ void PlayingUpdate(Jogo *jogo, float dt)
             jogo->cat.pos = configMapa.catSpawn;
             jogo->catBlock = configMapa.catBlock;
             jogo->dogBlock = configMapa.dogBlock;
-            jogo->catButton = (Button){configMapa.catButton, &jogo->catBlock};
-            jogo->dogButton = (Button){configMapa.dogButton, &jogo->dogBlock};
+            jogo->catButton.rect = configMapa.catButton;
+            jogo->catButton.block = &jogo->catBlock;
+            jogo->dogButton.rect = configMapa.dogButton;
+            jogo->dogButton.block = &jogo->dogBlock;
             jogo->caixa.rect = configMapa.box;
         } else {
             jogo->finishedGame = true;
+            ScoreInserir(&jogo->score, jogo->tempo);
+            ScoreSalvar(&jogo->score, "Score.txt");
+            jogo->tempo = 0.0f;
         }    
         jogo->canGoNext = false;
     }
@@ -213,23 +212,22 @@ void PlayingDraw(Jogo *jogo)
     // BeginDrawing();
 
     ClearBackground(BLACK);
+    // elementos de interação
+    CaixaDraw(&jogo->caixa);
+    DrawRectangleRec(jogo->catBlock, PURPLE);
+    DrawRectangleRec(jogo->dogBlock, BLUE);
 
     DrawMapa(); // repetição que desenha cada tile (puramente visual, a colisão é feita no player.c)
     DrawSaidas();
     PuddleDraw(configMapa.waterPuddle);
     
-    // desenhos dos players
-    PlayerDraw(&jogo->cat);
-    PlayerDraw(&jogo->dog);
-
-    // elementos de interação
-    DrawRectangleRec(jogo->catBlock, PURPLE);
-    DrawRectangleRec(jogo->dogBlock, BLUE);
-    CaixaDraw(&jogo->caixa);
-    
     // botões
     ButtonDraw(&jogo->catButton, PURPLE); 
     ButtonDraw(&jogo->dogButton, BLUE);
+
+    // desenhos dos players
+    PlayerDraw(&jogo->cat);
+    PlayerDraw(&jogo->dog);
 
     // score
     TempoAtualDraw(jogo->tempo);

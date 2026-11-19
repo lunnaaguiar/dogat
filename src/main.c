@@ -65,8 +65,8 @@ int main(void) {
     jogo.catBlock = configMapa.catBlock;
     jogo.dogBlock = configMapa.dogBlock;
     // botão
-    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock};
-    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock};
+    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
+    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
     /* - - - - - - - - - - - - - - - - - - - - -*/
     
     /* - - - - - - - - - - - - - - - - - - - - -*/

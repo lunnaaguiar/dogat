@@ -36,8 +36,8 @@ bool MapaLoad(int index) {
             configMapa.catBlock.y = configMapa.catBlockIniPos;
             configMapa.dogBlock.y = configMapa.dogBlockIniPos;
 
-            exits.catExit = (Rectangle){1200, 350, 64, 64};
-            exits.dogExit = (Rectangle){1100, 350, 64, 64};
+            exits.catExit = (Rectangle){1200, 322, 64, 64};
+            exits.dogExit = (Rectangle){1100, 322, 64, 64};
             break;
 
         case 1:
@@ -50,8 +50,8 @@ bool MapaLoad(int index) {
                 .waterPuddle = {380, 600, 500, 10}
             };
 
-            exits.catExit = (Rectangle){1000, 545, 64, 64};
-            exits.dogExit = (Rectangle){1100, 545, 64, 64};
+            exits.catExit = (Rectangle){1000, 517, 64, 64};
+            exits.dogExit = (Rectangle){1100, 517, 64, 64};
             break;
 
         case 2:
@@ -69,12 +69,12 @@ bool MapaLoad(int index) {
                 .catBlock = {585, 480, 80, 200}, //(x, y, width, height)
                 .dogBlock = {585, 255, 80, 200},
 
-                .catButton = {300, 590, 60, 20},
-                .dogButton = {900, 590, 60, 20},
+                .catButton = {300, 590, 64, 64},
+                .dogButton = {900, 590, 64, 64},
             };
 
-            exits.catExit = (Rectangle){1000, 545, 64, 64};
-            exits.dogExit = (Rectangle){1100, 545, 64, 64};
+            exits.catExit = (Rectangle){1000, 517, 64, 64};
+            exits.dogExit = (Rectangle){1100, 517, 64, 64};
             break;
 
         case 3:
@@ -89,16 +89,16 @@ bool MapaLoad(int index) {
                 .waterPuddle = {630, 406, 450, 10},
             };
 
-            exits.catExit = (Rectangle){1200, 348, 64, 64};
-            exits.dogExit = (Rectangle){1100, 348, 64, 64};
+            exits.catExit = (Rectangle){1200, 320, 64, 64};
+            exits.dogExit = (Rectangle){1100, 320, 64, 64};
             break;
 
         case 4:
             memcpy(mapa, MAPA5, sizeof(mapa));
 
             configMapa = (MapaConfig){
-                .dogSpawn = {100, 590},
-                .catSpawn = {100, 550},
+                .dogSpawn = {100, 570},
+                .catSpawn = {100, 480},
 
                 .box = {700, 590, 100, 100},
 
@@ -112,12 +112,12 @@ bool MapaLoad(int index) {
                 .catBlock = {259, 480, 60, 150}, //(x, y, width, height)
                 .dogBlock = {259, 270, 60, 150},
 
-                .catButton = {180, 590, 60, 20},
-                .dogButton = {350, 590, 60, 20},
+                .catButton = {180, 590, 64, 64},
+                .dogButton = {350, 590, 64, 64},
             };
 
-            exits.catExit = (Rectangle){1200, 348, 64, 64};
-            exits.dogExit = (Rectangle){1100, 348, 64, 64};
+            exits.catExit = (Rectangle){1200, 320, 64, 64};
+            exits.dogExit = (Rectangle){1100, 320, 64, 64};
             break;
 
         default:
@@ -139,8 +139,20 @@ void DrawMapa(void){
 }
 
 void DrawSaidas(void) {
-    DrawRectangleRec(exits.catExit, PURPLE);
-    DrawRectangleRec(exits.dogExit, BLUE);
+    static Texture2D catHouse, dogHouse;
+
+    static bool loaded = false;
+    
+    if (!loaded){
+    catHouse = LoadTexture("assets/sprites/casacat.png");
+    dogHouse = LoadTexture("assets/sprites/casadog.png");
+    SetTextureFilter(catHouse, TEXTURE_FILTER_POINT);
+    SetTextureFilter(dogHouse, TEXTURE_FILTER_POINT);
+    loaded = true;
+    }
+
+    DrawTextureEx(catHouse, (Vector2){exits.catExit.x, exits.catExit.y}, 0.0f, 3.0f, WHITE);
+    DrawTextureEx(dogHouse, (Vector2){exits.dogExit.x, exits.dogExit.y}, 0.0f, 3.0f, WHITE);
 }
 
 bool MapaCompleto(Rectangle catRect, Rectangle dogRect) {

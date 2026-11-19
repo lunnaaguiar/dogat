@@ -28,8 +28,8 @@ void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float 
     }
 }
 
-void ButtonDraw(Button *button, Color cor){
-    DrawRectangleRec(button->rect, cor);
+void ButtonDraw(Button *button, Color color){
+    DrawTexturePro(button->sprite,(Rectangle){5, 22, 22, 22},button->rect,(Vector2){0, 0}, 0, color);
 }
 
 static void ResolverColisaoCaixaY(Caixa *c, Rectangle tile){
@@ -220,6 +220,17 @@ bool CatTouchedPuddle(Rectangle puddle, const Player *gato){
 
 void PuddleDraw(Rectangle puddle){
     if (puddle.width <= 0 || puddle.height <= 0) return;
+
+    /*static Texture2D puddleText;
+    static bool loaded = false;
+
+    if (!loaded){
+    puddleText = LoadTexture("assets/sprites/agua.png");
+    SetTextureFilter(puddleText, TEXTURE_FILTER_POINT);
+    loaded = true;
+    }
+
+    DrawTextureEx(puddleText, (Vector2){puddle.x, puddle.y}, 1.0f, 1.0f, WHITE);*/
 
     DrawRectangleRec(puddle, (Color){ 80, 170, 255, 180 });
 }
