@@ -19,7 +19,7 @@ int main(void) {
     
     // - - - - - - - -
     // música principal
-    Music music = LoadMusicStream("assets/sons/Time_for_adventure.mp3");
+    Music music = LoadMusicStream("assets/sons/time_for_adventure.mp3");
     PlayMusicStream(music);
     
     // struct sons
@@ -67,8 +67,8 @@ int main(void) {
     jogo.catBlock = configMapa.catBlock;
     jogo.dogBlock = configMapa.dogBlock;
     // botão
-    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock};
-    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock};
+    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
+    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
     /* - - - - - - - - - - - - - - - - - - - - -*/
     
     /* - - - - - - - - - - - - - - - - - - - - -*/
@@ -118,8 +118,11 @@ int main(void) {
             break;
 
         case VICTORY:
-            ClearBackground(BLACK);
-            DrawText("VOCÊ GANHOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10,10, 12, WHITE);
+            VictoryDraw(&jogo);
+            if (VictoryUpdate()) {
+                JogoReiniciar(&jogo);
+                estadoAtual = PLAYING;
+            }
             break;
 
         default:

@@ -148,12 +148,6 @@ void PlayingUpdate(Jogo *jogo, float dt)
         jogo->cat.isActive = !jogo->cat.isActive;
     }
 
-    if (IsKeyPressed(KEY_M)){
-        ScoreInserir(&jogo->score, jogo->tempo);
-        ScoreSalvar(&jogo->score, "Score.txt");
-        jogo->tempo = 0.0f;
-    }
-
     // player update
     PlayerUpdate(&jogo->dog, dt, jogo->catBlock, jogo->dogBlock);
     PlayerUpdate(&jogo->cat, dt, jogo->catBlock, jogo->dogBlock);
@@ -184,7 +178,7 @@ void PlayingUpdate(Jogo *jogo, float dt)
 
     // parte sem função ainda:
     jogo->levelComplete = MapaCompleto(jogo->catRect, jogo->dogRect);
-    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat);
+    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat) || IsKeyPressed(KEY_R);
 
     if (jogo->levelComplete && jogo->canGoNext || jogo->catInPuddle) {
         if(!jogo->catInPuddle) jogo->currentMap++;
@@ -193,11 +187,16 @@ void PlayingUpdate(Jogo *jogo, float dt)
             jogo->cat.pos = configMapa.catSpawn;
             jogo->catBlock = configMapa.catBlock;
             jogo->dogBlock = configMapa.dogBlock;
-            jogo->catButton = (Button){configMapa.catButton, &jogo->catBlock};
-            jogo->dogButton = (Button){configMapa.dogButton, &jogo->dogBlock};
+            jogo->catButton.rect = configMapa.catButton;
+            jogo->catButton.block = &jogo->catBlock;
+            jogo->dogButton.rect = configMapa.dogButton;
+            jogo->dogButton.block = &jogo->dogBlock;
             jogo->caixa.rect = configMapa.box;
         } else {
             jogo->finishedGame = true;
+            ScoreInserir(&jogo->score, jogo->tempo);
+            ScoreSalvar(&jogo->score, "Score.txt");
+            //jogo->tempo = 0.0f;
         }    
         jogo->canGoNext = false;
     }
@@ -213,6 +212,10 @@ void PlayingDraw(Jogo *jogo)
     // BeginDrawing();
 
     ClearBackground(BLACK);
+    // elementos de interação
+    CaixaDraw(&jogo->caixa);
+    DrawRectangleRec(jogo->catBlock, PURPLE);
+    DrawRectangleRec(jogo->dogBlock, BLUE);
 
     // DrawMapa(); // repetição que desenha cada tile (puramente visual, a colisão é feita no player.c)
 
@@ -226,18 +229,13 @@ void PlayingDraw(Jogo *jogo)
     DrawSaidas();
     PuddleDraw(configMapa.waterPuddle);
     
-    // desenhos dos players
-    PlayerDraw(&jogo->cat);
-    PlayerDraw(&jogo->dog);
-
-    // elementos de interação
-    DrawRectangleRec(jogo->catBlock, PURPLE);
-    DrawRectangleRec(jogo->dogBlock, BLUE);
-    CaixaDraw(&jogo->caixa);
-    
     // botões
     ButtonDraw(&jogo->catButton, PURPLE); 
     ButtonDraw(&jogo->dogButton, BLUE);
+
+    // desenhos dos players
+    PlayerDraw(&jogo->cat);
+    PlayerDraw(&jogo->dog);
 
     // score
     TempoAtualDraw(jogo->tempo);
@@ -245,3 +243,67 @@ void PlayingDraw(Jogo *jogo)
 
     // EndDrawing(); // finaliza
 }
+
+// 2 - VICTORY
+#define BTN_W 320
+#define BTN_H 70
+
+static Rectangle BotaoJogarNovamente(void)
+{
+    return (Rectangle){ (1280 - BTN_W) / 2.0f, 450, BTN_W, BTN_H };
+}
+
+void JogoReiniciar(Jogo *jogo)
+{
+    jogo->currentMap = 0;
+    MapaLoad(0);
+
+    // mesmas linhas que já existem no PlayingUpdate
+    jogo->dog.pos = configMapa.dogSpawn;
+    jogo->cat.pos = configMapa.catSpawn;
+    jogo->catBlock = configMapa.catBlock;
+    jogo->dogBlock = configMapa.dogBlock;
+    jogo->catButton.rect = configMapa.catButton;
+    jogo->catButton.block = &jogo->catBlock;
+    jogo->dogButton.rect = configMapa.dogButton;
+    jogo->dogButton.block = &jogo->dogBlock;
+    jogo->caixa.rect = configMapa.box;
+
+    jogo->dog.velY = 0;
+    jogo->cat.velY = 0;
+    jogo->dog.isActive = true;
+    jogo->cat.isActive = false;
+
+    jogo->tempo = 0.0f;
+    jogo->finishedGame = false;
+    jogo->canGoNext = false;
+}
+
+bool VictoryUpdate(void)
+{
+    bool sobre = CheckCollisionPointRec(GetMousePosition(), BotaoJogarNovamente());
+    return (sobre && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || IsKeyPressed(KEY_ENTER);
+}
+
+void VictoryDraw(const Jogo *jogo)
+{
+    ClearBackground(BLACK);
+
+    const char *titulo = "VOCÊ VENCEU!";
+    DrawText(titulo, (1280 - MeasureText(titulo, 60)) / 2, 250, 60, WHITE);
+
+    char buf[16];
+    ScoreFormatar(jogo->tempo, buf, sizeof(buf));
+    const char *tempo = TextFormat("Tempo: %s", buf);
+    DrawText(tempo, (1280 - MeasureText(tempo, 30)) / 2, 350, 30, YELLOW);
+
+    Rectangle botao = BotaoJogarNovamente();
+    bool sobre = CheckCollisionPointRec(GetMousePosition(), botao);
+    DrawRectangleRec(botao, sobre ? LIGHTGRAY : GRAY);
+    DrawRectangleLinesEx(botao, 3, WHITE);
+
+    const char *texto = "Jogar novamente";
+    DrawText(texto, botao.x + (BTN_W - MeasureText(texto, 28)) / 2,
+             botao.y + (BTN_H - 28) / 2, 28, BLACK);
+}
+

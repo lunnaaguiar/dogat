@@ -10,6 +10,7 @@ typedef struct{
     Rectangle *block;
     float iniPos;
     float destiny;
+    Texture2D sprite;
 }Button;
 
 typedef struct  
@@ -29,6 +30,6 @@ bool CatTouchedPuddle(Rectangle puddle, const Player *gato);
 void PuddleDraw(Rectangle puddle);
 
 void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float destiny);
-void ButtonDraw(Button *button, Color cor);
+void ButtonDraw(Button *button, Color color);
 
 #endif
