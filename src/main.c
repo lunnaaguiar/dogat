@@ -19,7 +19,7 @@ int main(void) {
     
     // - - - - - - - -
     // música principal
-    Music music = LoadMusicStream("assets/sons/Time_for_adventure.mp3");
+    Music music = LoadMusicStream("assets/sons/time_for_adventure.mp3");
     PlayMusicStream(music);
     
     // struct sons
