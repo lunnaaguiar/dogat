@@ -116,8 +116,11 @@ int main(void) {
             break;
 
         case VICTORY:
-            ClearBackground(BLACK);
-            DrawText("VOCÊ GANHOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", 10,10, 12, WHITE);
+            VictoryDraw(&jogo);
+            if (VictoryUpdate()) {
+                JogoReiniciar(&jogo);
+                estadoAtual = PLAYING;
+            }
             break;
 
         default:

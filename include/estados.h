@@ -61,5 +61,10 @@ void AttractModeDraw(const Attract *attract);
 // 1 - PLAYING
 void PlayingUpdate(Jogo *jogo, float dt);
 void PlayingDraw(Jogo *jogo); // const para não alterar
+// 2 - VICTORY
+void JogoReiniciar(Jogo *jogo);   // volta do início
+bool VictoryUpdate(void);         // true quando clicar em jogar novamente
+void VictoryDraw(const Jogo *jogo);
+
 
 #endif
