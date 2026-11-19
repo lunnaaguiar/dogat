@@ -196,7 +196,7 @@ void PlayingUpdate(Jogo *jogo, float dt)
             jogo->finishedGame = true;
             ScoreInserir(&jogo->score, jogo->tempo);
             ScoreSalvar(&jogo->score, "Score.txt");
-            jogo->tempo = 0.0f;
+            //jogo->tempo = 0.0f;
         }    
         jogo->canGoNext = false;
     }
@@ -235,3 +235,67 @@ void PlayingDraw(Jogo *jogo)
 
     // EndDrawing(); // finaliza
 }
+
+// 2 - VICTORY
+#define BTN_W 320
+#define BTN_H 70
+
+static Rectangle BotaoJogarNovamente(void)
+{
+    return (Rectangle){ (1280 - BTN_W) / 2.0f, 450, BTN_W, BTN_H };
+}
+
+void JogoReiniciar(Jogo *jogo)
+{
+    jogo->currentMap = 0;
+    MapaLoad(0);
+
+    // mesmas linhas que já existem no PlayingUpdate
+    jogo->dog.pos = configMapa.dogSpawn;
+    jogo->cat.pos = configMapa.catSpawn;
+    jogo->catBlock = configMapa.catBlock;
+    jogo->dogBlock = configMapa.dogBlock;
+    jogo->catButton.rect = configMapa.catButton;
+    jogo->catButton.block = &jogo->catBlock;
+    jogo->dogButton.rect = configMapa.dogButton;
+    jogo->dogButton.block = &jogo->dogBlock;
+    jogo->caixa.rect = configMapa.box;
+
+    jogo->dog.velY = 0;
+    jogo->cat.velY = 0;
+    jogo->dog.isActive = true;
+    jogo->cat.isActive = false;
+
+    jogo->tempo = 0.0f;
+    jogo->finishedGame = false;
+    jogo->canGoNext = false;
+}
+
+bool VictoryUpdate(void)
+{
+    bool sobre = CheckCollisionPointRec(GetMousePosition(), BotaoJogarNovamente());
+    return (sobre && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || IsKeyPressed(KEY_ENTER);
+}
+
+void VictoryDraw(const Jogo *jogo)
+{
+    ClearBackground(BLACK);
+
+    const char *titulo = "VOCÊ VENCEU!";
+    DrawText(titulo, (1280 - MeasureText(titulo, 60)) / 2, 250, 60, WHITE);
+
+    char buf[16];
+    ScoreFormatar(jogo->tempo, buf, sizeof(buf));
+    const char *tempo = TextFormat("Tempo: %s", buf);
+    DrawText(tempo, (1280 - MeasureText(tempo, 30)) / 2, 350, 30, YELLOW);
+
+    Rectangle botao = BotaoJogarNovamente();
+    bool sobre = CheckCollisionPointRec(GetMousePosition(), botao);
+    DrawRectangleRec(botao, sobre ? LIGHTGRAY : GRAY);
+    DrawRectangleLinesEx(botao, 3, WHITE);
+
+    const char *texto = "Jogar novamente";
+    DrawText(texto, botao.x + (BTN_W - MeasureText(texto, 28)) / 2,
+             botao.y + (BTN_H - 28) / 2, 28, BLACK);
+}
+
