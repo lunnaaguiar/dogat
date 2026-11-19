@@ -24,7 +24,12 @@ void ScoreSalvar(const Score *recorde, const char *arquivo);
 // escreve o tempo no formato MM:SS:mmm
 void ScoreFormatar(float tempo, char *buf, int tamanho);
 
+// imprimir o score
+void TempoAtualDraw(float tempo);
+
+void ScoreRankDraw(Score * score);
 
 void ScoreLiberar(Score *recorde);
+
 
 #endif

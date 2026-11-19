@@ -1,6 +1,7 @@
 #include "score.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "raylib.h"
 
 void ScoreInit(Score *recorde)
 {
@@ -66,6 +67,23 @@ void ScoreFormatar(float tempo, char *buf, int tamanho)
     int sec = (totalMs / 1000) % 60;
     int ms  = totalMs % 1000;
     snprintf(buf, tamanho, "%02d:%02d:%03d", min, sec, ms);
+}
+
+void TempoAtualDraw(float tempo){
+    int y = 70, pos = 1;
+    char buf[16];
+    ScoreFormatar(tempo, buf, sizeof(buf));
+    DrawText(TextFormat("Time: %s", buf), 10, 40, 20, WHITE);
+}
+
+void ScoreRankDraw(Score * score){
+    int y = 70, pos = 1;
+    char buf[16];
+    for (NoScore *n = score->inicio; n != NULL && pos <= 5; n = n->prox, pos++) {
+        ScoreFormatar(n->tempo, buf, sizeof(buf));
+        DrawText(TextFormat("%d. %s", pos, buf), 10, y, 20, YELLOW);
+        y += 24;
+    }
 }
 
 void ScoreLiberar(Score *recorde)

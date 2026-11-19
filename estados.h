@@ -5,34 +5,61 @@
 #include "player.h"
 #include "interactable.h"
 #include "mapa.h"
+// #include "tempo.h"
+#include "score.h"
+
 // #include <stdbool.h>    
 
-typedef enum estados { 
-    ATTRACT_MODE, PLAYING //, PAUSE, MENU
+typedef enum { 
+    ATTRACT_MODE, PLAYING, VICTORY //, PAUSE, MENU
 }Estado;
-
-typedef struct {
-    float ms;
-    float sec;
-    float min;
-}Time;
 
 typedef struct{
     Player dog;
     Player cat;
 
-    Rectangle parede;
+    Rectangle block1;
+    Rectangle block2;
+    Rectangle dogBlock;
+    Rectangle catBlock;
     Caixa caixa;
+    Button dogButton;
+    Button catButton;
 
-    Time tempo;
+    Rectangle dogRect;
+    Rectangle catRect;
+
+    // mapa e fase
+    int currentMap;
+    bool finishedGame;
+    bool canGoNext;
+    bool levelComplete;
+    bool catInPuddle;
+
+    Score score;
+
+    float tempo;
 }Jogo;
 
+typedef struct {
+    int direcao;
+    float tempo;
+}Mov;
+
+
+typedef struct{
+    Player dog;
+    Player cat;
+    Mov movDog;
+    Mov movCat;
+}Attract;
+
 // 0 - ATTRACT MODE
-void AttractModeUpdate();
-void AttractModeDraw();
+void AttractModeUpdate(Attract *attract, float dt);
+void AttractModeDraw(const Attract *attract);
 
 // 1 - PLAYING
 void PlayingUpdate(Jogo *jogo, float dt);
-void PlayingDraw(const Jogo *jogo); // const para não alterar
+void PlayingDraw(Jogo *jogo); // const para não alterar
 
 #endif
