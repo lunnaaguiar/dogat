@@ -226,7 +226,7 @@ void PlayingDraw(Jogo *jogo)
     PlayerDraw(&jogo->dog);
     
     // botões
-    ButtonDraw(&jogo->catButton, WHITE); 
+    ButtonDraw(&jogo->catButton, PURPLE); 
     ButtonDraw(&jogo->dogButton, BLUE);
 
     // score
