@@ -148,12 +148,6 @@ void PlayingUpdate(Jogo *jogo, float dt)
         jogo->cat.isActive = !jogo->cat.isActive;
     }
 
-    if (IsKeyPressed(KEY_M)){
-        ScoreInserir(&jogo->score, jogo->tempo);
-        ScoreSalvar(&jogo->score, "Score.txt");
-        jogo->tempo = 0.0f;
-    }
-
     // player update
     PlayerUpdate(&jogo->dog, dt, jogo->catBlock, jogo->dogBlock);
     PlayerUpdate(&jogo->cat, dt, jogo->catBlock, jogo->dogBlock);
@@ -184,7 +178,7 @@ void PlayingUpdate(Jogo *jogo, float dt)
 
     // parte sem função ainda:
     jogo->levelComplete = MapaCompleto(jogo->catRect, jogo->dogRect);
-    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat);
+    jogo->catInPuddle = CatTouchedPuddle(configMapa.waterPuddle, &jogo->cat) || IsKeyPressed(KEY_R);
 
     if (jogo->levelComplete && jogo->canGoNext || jogo->catInPuddle) {
         if(!jogo->catInPuddle) jogo->currentMap++;
@@ -198,6 +192,9 @@ void PlayingUpdate(Jogo *jogo, float dt)
             jogo->caixa.rect = configMapa.box;
         } else {
             jogo->finishedGame = true;
+            ScoreInserir(&jogo->score, jogo->tempo);
+            ScoreSalvar(&jogo->score, "Score.txt");
+            jogo->tempo = 0.0f;
         }    
         jogo->canGoNext = false;
     }

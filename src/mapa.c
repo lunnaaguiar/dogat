@@ -97,8 +97,8 @@ bool MapaLoad(int index) {
             memcpy(mapa, MAPA5, sizeof(mapa));
 
             configMapa = (MapaConfig){
-                .dogSpawn = {100, 590},
-                .catSpawn = {100, 550},
+                .dogSpawn = {100, 570},
+                .catSpawn = {100, 480},
 
                 .box = {700, 590, 100, 100},
 
