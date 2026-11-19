@@ -221,13 +221,13 @@ void PlayingDraw(Jogo *jogo)
     DrawSaidas();
     PuddleDraw(configMapa.waterPuddle);
     
-    // desenhos dos players
-    PlayerDraw(&jogo->cat);
-    PlayerDraw(&jogo->dog);
-    
     // botões
     ButtonDraw(&jogo->catButton, PURPLE); 
     ButtonDraw(&jogo->dogButton, BLUE);
+
+    // desenhos dos players
+    PlayerDraw(&jogo->cat);
+    PlayerDraw(&jogo->dog);
 
     // score
     TempoAtualDraw(jogo->tempo);

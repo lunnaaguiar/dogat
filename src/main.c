@@ -13,7 +13,7 @@ int main(void) {
     InitAudioDevice(); // preparar pra os sons
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
-    int currentMap = 2;
+    int currentMap = 0;
     bool finishedGame = false;
     bool canGoNext = true;
     
