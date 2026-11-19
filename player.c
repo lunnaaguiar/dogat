@@ -295,5 +295,5 @@ void PlayerDraw(const Player *p)
     DrawTexturePro(p->sprite, corte, dest, origin, 0.0f, WHITE);
 
     // hitbox
-    DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
+    // DrawRectangleLinesEx(p->hitbox, 2, RED); // só p visualizar
 }
