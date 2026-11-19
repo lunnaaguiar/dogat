@@ -41,6 +41,8 @@ int main(void) {
     jogo.finishedGame = finishedGame;
     jogo.canGoNext = canGoNext;
 
+    jogo.fundos[0] = LoadTexture("assets/mapas/fase1.png");
+
     Player dog, cat;
     // cachorro
     PlayerInit(&jogo.dog, "assets/sprites/cachorrinho2-Sheet.png",

@@ -214,7 +214,15 @@ void PlayingDraw(Jogo *jogo)
 
     ClearBackground(BLACK);
 
-    DrawMapa(); // repetição que desenha cada tile (puramente visual, a colisão é feita no player.c)
+    // DrawMapa(); // repetição que desenha cada tile (puramente visual, a colisão é feita no player.c)
+
+    if (jogo->currentMap < 2 && jogo->fundos[jogo->currentMap].id > 0) {
+        DrawTexture(jogo->fundos[jogo->currentMap], 0, 0, WHITE);
+    } else {
+        DrawMapa(); // fase sem imagem ainda: desenha os quadrados brancos
+    }
+
+    DrawSaidas();
     DrawSaidas();
     PuddleDraw(configMapa.waterPuddle);
     
