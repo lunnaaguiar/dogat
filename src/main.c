@@ -28,19 +28,19 @@ int main(void) {
 
     Player dog, cat;
     // cachorro
-    PlayerInit(&jogo.dog, "assets/cachorrinho2-Sheet.png",
+    PlayerInit(&jogo.dog, "assets/sprites/cachorrinho2-Sheet.png",
         configMapa.dogSpawn, true,  4.0f, (Vector2){0.8f, 0.6f});
         jogo.dog.facesLeft = false;
         jogo.dog.jumpForce = 400.0f;
 
     // gato
-    PlayerInit(&jogo.cat, "assets/gatinho2-Sheet.png",     
+    PlayerInit(&jogo.cat, "assets/sprites/gatinho2-Sheet.png",     
         configMapa.catSpawn, false, 2.5f, (Vector2){0.7f, 0.9f});
         jogo.cat.jumpForce = 600.0f; // altura que o gato pula
         jogo.cat.facesLeft = true; // pq desenhei do lado contrário
 
     // elementos interativos
-    CaixaInit(&jogo.caixa, "assets/caixa-Sheet.png", 64, (Vector2){10,0});    
+    CaixaInit(&jogo.caixa, "assets/sprites/caixa-Sheet.png", 64, (Vector2){10,0});    
     jogo.caixa.rect = configMapa.box;
 
     // TEMPO
@@ -60,14 +60,14 @@ int main(void) {
     attract.dog = jogo.dog;
 
     // cachorro
-    PlayerInit(&attract.dog, "assets/cachorrinho2-Sheet.png",
+    PlayerInit(&attract.dog, "assets/sprites/cachorrinho2-Sheet.png",
         configMapa.dogSpawn, true,  6.0f, (Vector2){0.8f, 0.6f});
         attract.dog.facesLeft = false;
         attract.dog.jumpForce = 400.0f;
         attract.dog.speed = 300.0f;
         
     // gato
-    PlayerInit(&attract.cat, "assets/gatinho2-Sheet.png",     
+    PlayerInit(&attract.cat, "assets/sprites/gatinho2-Sheet.png",     
         configMapa.catSpawn, false, 3.5f, (Vector2){0.7f, 0.9f});
         attract.cat.jumpForce = 600.0f; // altura que o gato pula
         attract.cat.facesLeft = true; // pq desenhei do lado contrário
