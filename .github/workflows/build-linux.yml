@@ -1,0 +1,48 @@
+name: Build Linux
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:      # permite rodar manualmente pelo site
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04   # versão mais antiga
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake \
+            libasound2-dev libx11-dev libxrandr-dev libxi-dev \
+            libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev
+
+      - name: Compilar o raylib
+        run: |
+          git clone --depth 1 --branch 5.5 https://github.com/raysan5/raylib.git
+          cd raylib
+          cmake -B build -DBUILD_SHARED_LIBS=OFF -DBUILD_EXAMPLES=OFF
+          cmake --build build -j
+          sudo cmake --install build
+
+      - name: Compilar o jogo
+        run: make
+
+      - name: Empacotar
+        run: |
+          mkdir dogat-linux
+          cp Dogat dogat-linux/
+          cp -r assets dogat-linux/
+          cp -r data dogat-linux/
+          chmod +x dogat-linux/Dogat
+          tar -czf dogat-linux.tar.gz dogat-linux
+
+      - name: Guardar o arquivo pra download
+        uses: actions/upload-artifact@v4
+        with:
+          name: dogat-linux
+          path: dogat-linux.tar.gz
