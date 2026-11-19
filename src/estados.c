@@ -187,8 +187,10 @@ void PlayingUpdate(Jogo *jogo, float dt)
             jogo->cat.pos = configMapa.catSpawn;
             jogo->catBlock = configMapa.catBlock;
             jogo->dogBlock = configMapa.dogBlock;
-            jogo->catButton = (Button){configMapa.catButton, &jogo->catBlock};
-            jogo->dogButton = (Button){configMapa.dogButton, &jogo->dogBlock};
+            jogo->catButton.rect = configMapa.catButton;
+            jogo->catButton.block = &jogo->catBlock;
+            jogo->dogButton.rect = configMapa.dogButton;
+            jogo->dogButton.block = &jogo->dogBlock;
             jogo->caixa.rect = configMapa.box;
         } else {
             jogo->finishedGame = true;
@@ -224,7 +226,7 @@ void PlayingDraw(Jogo *jogo)
     PlayerDraw(&jogo->dog);
     
     // botões
-    ButtonDraw(&jogo->catButton, PURPLE); 
+    ButtonDraw(&jogo->catButton, WHITE); 
     ButtonDraw(&jogo->dogButton, BLUE);
 
     // score

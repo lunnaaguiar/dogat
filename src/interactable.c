@@ -28,8 +28,8 @@ void ButtonUpdate(Button *button, Player *player, float dt, float iniPos, float 
     }
 }
 
-void ButtonDraw(Button *button, Color cor){
-    DrawRectangleRec(button->rect, cor);
+void ButtonDraw(Button *button, Color color){
+    DrawTexturePro(button->sprite,(Rectangle){5, 22, 22, 22},button->rect,(Vector2){0, 0}, 0, color);
 }
 
 static void ResolverColisaoCaixaY(Caixa *c, Rectangle tile){

@@ -69,8 +69,8 @@ bool MapaLoad(int index) {
                 .catBlock = {585, 480, 80, 200}, //(x, y, width, height)
                 .dogBlock = {585, 255, 80, 200},
 
-                .catButton = {300, 590, 60, 20},
-                .dogButton = {900, 590, 60, 20},
+                .catButton = {300, 590, 64, 64},
+                .dogButton = {900, 590, 64, 64},
             };
 
             exits.catExit = (Rectangle){1000, 517, 64, 64};
@@ -140,7 +140,7 @@ void DrawMapa(void){
 
 void DrawSaidas(void) {
     static Texture2D catHouse, dogHouse;
-    
+
     static bool loaded = false;
     
     if (!loaded){
