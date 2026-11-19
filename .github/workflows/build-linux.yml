@@ -37,7 +37,6 @@ jobs:
           mkdir dogat-linux
           cp Dogat dogat-linux/
           cp -r assets dogat-linux/
-          cp -r data dogat-linux/
           chmod +x dogat-linux/Dogat
           tar -czf dogat-linux.tar.gz dogat-linux
 
