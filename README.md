@@ -3,6 +3,16 @@
 Jogo de plataforma cooperativo em C com [raylib](https://www.raylib.com/).
 Você controla um cachorro e um gato, alternando entre os dois, e leva os dois até as casinhas deles em cada fase.
 
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+<img src="https://media1.tenor.com/m/qxy4ndhkBQIAAAAC/cat.gif" width="40">
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+<img src="https://media1.tenor.com/m/qxy4ndhkBQIAAAAC/cat.gif" width="40">
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+<img src="https://media1.tenor.com/m/qxy4ndhkBQIAAAAC/cat.gif" width="40">
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+<img src="https://media1.tenor.com/m/qxy4ndhkBQIAAAAC/cat.gif" width="40">
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+
 ### Controles
  
 | Tecla | Ação |
