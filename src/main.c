@@ -108,8 +108,6 @@ int main(void) {
         switch (estadoAtual)
         {
         case ATTRACT_MODE:
-            /* code */
-            DrawText("Teste ATTRACT MODE", 10,10, 12, WHITE);
             if (IsKeyPressed(KEY_ENTER)) estadoAtual = PLAYING;
             AttractModeUpdate(&attract, dt);
             AttractModeDraw(&attract);
