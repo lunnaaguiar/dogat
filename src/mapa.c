@@ -112,8 +112,8 @@ bool MapaLoad(int index) {
                 .catBlock = {259, 480, 60, 150}, //(x, y, width, height)
                 .dogBlock = {259, 270, 60, 150},
 
-                .catButton = {180, 590, 64, 64},
-                .dogButton = {350, 590, 64, 64},
+                .catButton = {120, 590, 64, 64},
+                .dogButton = {400, 590, 64, 64},
             };
 
             exits.catExit = (Rectangle){1200, 320, 64, 64};
