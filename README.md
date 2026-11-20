@@ -17,7 +17,9 @@ Você controla um cachorro e um gato, alternando entre os dois, e leva os dois a
 | `ESC` | Sair |
 
 ### Vídeo da gameplay:
-[Youtube](https://youtu.be/66GXMJMB2wc)
+[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://youtu.be/66GXMJMB2wc)
+
+*clique aqui* ⬆️
 
 ## Rodar no Windows
  
