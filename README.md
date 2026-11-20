@@ -3,7 +3,9 @@
 Jogo de plataforma cooperativo em C com [raylib](https://www.raylib.com/).
 Você controla um cachorro e um gato, alternando entre os dois, e leva os dois até as casinhas deles em cada fase.
 
-### Controles
+<img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40"> <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgifs%2Fdancing-cat-18.gif" width="40"> <img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40"> <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgifs%2Fdancing-cat-18.gif" width="40"> <img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40"> <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgifs%2Fdancing-cat-18.gif" width="40"> <img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40"> <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgifs%2Fdancing-cat-18.gif" width="40"> <img src="https://64.media.tumblr.com/695206b9016139f7bcbe36e3b21ae1bc/35972c1d916e180e-b5/s1280x1920/2dd451edbd44fd8be4be19b1b3b168cae1f8a714.gif" width="40">
+
+## Controles
  
 | Tecla | Ação |
 |---|---|
@@ -14,8 +16,10 @@ Você controla um cachorro e um gato, alternando entre os dois, e leva os dois a
 | `R` | Resetar a fase |
 | `ESC` | Sair |
 
-### Vídeo da gameplay:
-[Youtube](https://youtu.be/66GXMJMB2wc)
+## Vídeo da gameplay:
+[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://youtu.be/66GXMJMB2wc)
+
+*clique aqui* ⬆️
 
 ## Rodar no Windows
  
