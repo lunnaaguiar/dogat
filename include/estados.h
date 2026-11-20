@@ -41,13 +41,18 @@ typedef struct{
     Score score;
 
     float tempo;
+
+    // marcar o player
+    float tempoTroca; 
+    Rectangle seta;
+    Texture2D setaTex;
+    
 }Jogo;
 
 typedef struct {
     int direcao;
     float tempo;
 }Mov;
-
 
 typedef struct{
     Player dog;
