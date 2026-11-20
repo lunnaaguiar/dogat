@@ -11,6 +11,7 @@ Você controla um cachorro e um gato, alternando entre os dois, e leva os dois a
 | `←` `→` ou `A` `D` | Andar |
 | `↑` ou `W` | Pular |
 | `ESPAÇO` | Trocar entre cachorro e gato |
+| `R` | Resetar a fase |
 | `ESC` | Sair |
 
 ### Vídeo da gameplay:
