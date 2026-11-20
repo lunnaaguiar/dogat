@@ -13,6 +13,9 @@ Você controla um cachorro e um gato, alternando entre os dois, e leva os dois a
 | `ESPAÇO` | Trocar entre cachorro e gato |
 | `ESC` | Sair |
 
+### Vídeo da gameplay:
+[Youtube](https://youtu.be/66GXMJMB2wc)
+
 ## Rodar no Windows
  
 Pré-requisito: [raylib](https://www.raylib.com/) instalado em `C:\raylib` (com `gcc` / MinGW).
