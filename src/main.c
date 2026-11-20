@@ -74,6 +74,11 @@ int main(void) {
     // botão
     jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock, 0, 0, LoadTexture("assets/sprites/botao.png")};
     jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock, 0, 0, LoadTexture("assets/sprites/botao.png")};
+
+    // seta marcar personagem
+    jogo.seta = (Rectangle) {0,0, 32,32};
+    jogo.setaTex = LoadTexture("assets/sprites/seta.png");
+    // SetTextureFilter(jogo.setaTex, ) 
     /* - - - - - - - - - - - - - - - - - - - - -*/
     
     /* - - - - - - - - - - - - - - - - - - - - -*/

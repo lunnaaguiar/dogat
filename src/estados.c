@@ -146,6 +146,20 @@ void PlayingUpdate(Jogo *jogo, float dt)
     {
         jogo->dog.isActive = !jogo->dog.isActive;
         jogo->cat.isActive = !jogo->cat.isActive;
+
+        jogo->tempoTroca = 0.5; // add 2s
+    }
+
+    if(jogo->tempoTroca > 0){
+        jogo->tempoTroca -= dt;
+        
+        if(jogo->dog.isActive){
+            jogo->seta.x = jogo->dog.pos.x - 10;
+            jogo->seta.y = jogo->dog.pos.y - 68;
+        }else{
+            jogo->seta.x = jogo->cat.pos.x - 10;
+            jogo->seta.y = jogo->cat.pos.y - 60;
+        }
     }
 
     // player update
@@ -242,6 +256,10 @@ void PlayingDraw(Jogo *jogo)
     // desenhos dos players
     PlayerDraw(&jogo->cat);
     PlayerDraw(&jogo->dog);
+
+    // seta
+    if(jogo->tempoTroca > 0) DrawTexturePro(jogo->setaTex, (Rectangle) {0,0, jogo->seta.width, jogo->seta.height}, jogo->seta, (Vector2) {0,0}, 0, WHITE);
+
 
     // score
     TempoAtualDraw(jogo->tempo);
