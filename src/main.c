@@ -13,7 +13,7 @@ int main(void) {
     InitAudioDevice(); // preparar pra os sons
     SetWindowPosition(100, 100);
     SetTargetFPS(60);
-    int currentMap = 0;
+    int currentMap = 3;
     bool finishedGame = false;
     bool canGoNext = true;
     
@@ -41,6 +41,13 @@ int main(void) {
     jogo.finishedGame = finishedGame;
     jogo.canGoNext = canGoNext;
 
+    jogo.ceu = LoadTexture("assets/mapas/fundo.png");
+    jogo.fundos[0] = LoadTexture("assets/mapas/chao-fase1.png");
+    jogo.fundos[1] = LoadTexture("assets/mapas/chao-fase2.png");
+    jogo.fundos[2] = LoadTexture("assets/mapas/chao-fase3.png");
+    jogo.fundos[3] = LoadTexture("assets/mapas/chao-fase4.png");
+    jogo.fundos[4] = LoadTexture("assets/mapas/chao-fase5.png");
+
     Player dog, cat;
     // cachorro
     PlayerInit(&jogo.dog, "assets/sprites/cachorrinho2-Sheet.png",
@@ -65,8 +72,8 @@ int main(void) {
     jogo.catBlock = configMapa.catBlock;
     jogo.dogBlock = configMapa.dogBlock;
     // botão
-    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
-    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock, 0, 0, LoadTexture("assets/sprites/botao-Sheet.png")};
+    jogo.catButton = (Button){configMapa.catButton, &jogo.catBlock, 0, 0, LoadTexture("assets/sprites/botao.png")};
+    jogo.dogButton = (Button){configMapa.dogButton, &jogo.dogBlock, 0, 0, LoadTexture("assets/sprites/botao.png")};
     /* - - - - - - - - - - - - - - - - - - - - -*/
     
     /* - - - - - - - - - - - - - - - - - - - - -*/
